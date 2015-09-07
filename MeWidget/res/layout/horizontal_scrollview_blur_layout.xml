@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <com.example.mewidget.view.BlurLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:id="@+id/blur_layout"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent">
+     <ImageView
+         android:id="@+id/source"
+         android:scaleType="fitXY"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent" />
+     <ImageView
+         android:id="@+id/blur_image"
+         android:scaleType="fitXY"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:visibility="invisible"/>
+     <include layout="@layout/weather_detail_info_layout"/>
+ </com.example.mewidget.view.BlurLayout>

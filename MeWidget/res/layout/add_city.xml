@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="45dip"
+	        android:orientation="horizontal"
+	        android:gravity="center_vertical"
+	        android:background="@color/searchview_gray_color">
+		    <FrameLayout
+		        android:id="@+id/search"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+                android:layout_weight="1.0">	 
+				<LinearLayout 
+				    android:layout_width="match_parent"
+				    android:layout_height="37dp"
+				    android:orientation="horizontal" 
+				    android:layout_marginLeft="12dp" 
+		            android:background="@drawable/searchview_corner">   
+			        <ImageView
+				        android:id="@+id/search_icon"
+				        android:layout_width="wrap_content"
+				        	
+				        android:layout_height="match_parent"
+				        android:layout_marginLeft="8dp"
+			            android:gravity="center" 
+			            android:layout_gravity="center_horizontal"
+				        android:scaleType="centerInside"
+                        android:tint="@color/searchview_gray_color"
+				        android:src="@drawable/ic_search_white_24dp">
+				    </ImageView>
+				    <EditText
+				        android:id="@+id/search_view"
+				        android:layout_width="match_parent"
+				        android:layout_height="match_parent"
+						android:layout_gravity="center_horizontal"
+				        android:layout_marginLeft="3dp" 
+				        android:hint="@string/searchview_hint_text"
+				        android:textColorHint="@color/searchview_gray_color" 
+				        android:singleLine="true"
+				        android:background="@null"
+	                    android:textSize="15sp">
+				    </EditText>
+				</LinearLayout>
+		        <ImageView
+		            android:id="@+id/clear_button"
+		            android:layout_width="wrap_content"
+		            android:layout_height="match_parent"  
+		            android:layout_marginRight="8dp"
+		            android:layout_gravity="right"
+				    android:scaleType="centerInside"
+		            android:src="@drawable/ic_clear_white_24dp" 
+                    android:tint="@color/searchview_gray_color"
+		            android:visibility="gone"/>            
+		    </FrameLayout>
+		    <TextView  
+		        android:id="@+id/cancel_button"
+		        android:layout_width="wrap_content"  
+		        android:layout_height="match_parent"
+				android:gravity="center" 
+				android:layout_marginLeft="8dp"
+				android:layout_marginRight="8dp"
+				android:layout_gravity="center_horizontal"
+		        android:text="@string/cancel_text"
+	            android:textColor="@color/searchview_white_color"
+	            android:textSize="15sp">
+		    </TextView>
+		</LinearLayout>
+		<com.example.mewidget.view.PullToRefreshLayout
+		    android:id="@+id/refresh_view"  
+		    android:layout_width="match_parent"  
+		    android:layout_height="match_parent" >  
+		  
+		    <include layout="@layout/refresh_head" />
+		    <ListView  
+		        android:id="@+id/listView"  
+		        android:layout_width="fill_parent"  
+		        android:layout_height="wrap_content"
+	            android:fadeScrollbars="true"
+				android:scrollbars="none"
+		        android:padding="16dp" />
+		
+		</com.example.mewidget.view.PullToRefreshLayout>
+
+</LinearLayout>

@@ -1,0 +1,39 @@
+<resources>
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+    
+    <style name="TextStyle">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">bottom|center_horizontal</item>
+        <item name="android:text">@string/null_text</item>
+        <item name="android:singleLine">true</item>	
+        <item name="android:textColor">@color/widget_text_white_color</item>
+    </style>
+    
+    <style name="ShadowStyle">
+        <item name="android:shadowColor">#990000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">8</item>
+        <item name="android:shadowRadius">8</item>
+    </style>
+    
+    <style name="Weather.Widget.ProgressBar" parent="@android:style/Widget.Holo.ProgressBar">
+         <item name="android:indeterminateDrawable">@drawable/rotate_sun</item>
+    </style>
+    
+</resources>

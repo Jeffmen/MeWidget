@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+     <array name="weather_item_colors">
+        <item>#3F51B5</item>
+        <item>#4285F4</item>
+        <item>#039BE5</item>
+        <item>#0097A7</item>
+        <item>#009688</item>
+        <item>#0F9D58</item>
+        <item>#689F38</item>
+        <item>#EF6C00</item>
+        <item>#FF5722</item>
+        <item>#DB4437</item>
+        <item>#E91E63</item>
+        <item>#9C27B0</item>
+        <item>#673AB7</item>
+    </array>
+    <color name="widget_red_color">#CD3333</color>
+    <color name="widget_text_pink_color">#ff8a80</color>
+    <color name="widget_text_white_color">#ffffff</color>
+    <color name="widget_text_black_color">#000000</color>
+    <color name="weather_item_default_color">#ffffff</color>
+    <color name="weather_item_yellow_color">#FFDAB9</color>
+    <color name="weather_item_orange_color">#EEDC82</color>
+    <color name="weather_item_jiemo_color">#CD9B1D</color>
+    <color name="searchview_white_color">#DBDBDB</color>
+    <color name="searchview_gray_color">#758a99</color>
+    <color name="searchview_yellow_color">#FF5534</color>
+    <color name="searchview_deep_yellow_color">#FF5534</color>
+    <color name="weatheritem_lastview_color">#758a99</color>
+    <color name="temperature_line_orange">#FF4500</color>
+    <color name="temperature_line_blue">#87CEFA</color>
+    <color name="area_start_color">#3f0000ff</color>
+    <color name="area_end_color">#00ffffff</color>
+</resources>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+	<LinearLayout 
+	    android:layout_width="wrap_content"
+	    android:layout_height="match_parent"
+	    android:orientation="horizontal" 
+	    android:layout_marginLeft="20dp"
+		android:background="@drawable/searchview_corner"
+        android:layout_weight="6" >
+	    <ImageView
+	        android:id="@+id/search_icon"
+	        android:layout_width="wrap_content"
+	        android:layout_height="match_parent"
+	        android:layout_weight="1"
+	        android:layout_marginLeft="8dp"
+            android:gravity="center" 
+            android:layout_gravity="center_horizontal"
+	        android:scaleType="centerInside"
+	        android:src="@drawable/ic_my_location_white_24dp">
+	    </ImageView>
+	    <EditText
+	        android:id="@+id/search_key"
+	        android:layout_width="wrap_content"
+	        android:layout_height="match_parent" 
+            android:layout_weight="6"
+			android:gravity="center" 
+			android:layout_gravity="center_horizontal"
+	        android:hint="@string/searchview_hint_text">
+	    </EditText>
+	</LinearLayout>
+    <Button  
+        android:layout_width="wrap_content"  
+        android:layout_height="match_parent" 
+        android:layout_weight="1" 
+		android:gravity="center" 
+		android:layout_gravity="center_horizontal"
+        android:text="@string/cancel_text">
+    </Button>
+</LinearLayout>
