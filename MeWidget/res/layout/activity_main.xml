@@ -7,12 +7,12 @@
     android:id="@+id/main_id"
     tools:context="com.example.mewidget.MainActivity" >
     
-    <com.example.mewidget.view.DragListView
+    <com.example.mewidget.view.SpreadListView
         android:id="@+id/first_id"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:orientation="horizontal">
-    </com.example.mewidget.view.DragListView>
+    </com.example.mewidget.view.SpreadListView>
     
     <!-- <LinearLayout
         android:id="@+id/weatherIconLinear"

@@ -10,11 +10,11 @@
 	    android:layout_height="match_parent" > 
 	    
 		<include layout="@layout/refresh_head" />
-	    <com.example.mewidget.view.DragListView
+	    <com.example.mewidget.view.SpreadListView
 	        android:id="@+id/first_id"
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content">
-	    </com.example.mewidget.view.DragListView>
+	    </com.example.mewidget.view.SpreadListView>
 		
 	</com.example.mewidget.view.PullToRefreshLayout>
 

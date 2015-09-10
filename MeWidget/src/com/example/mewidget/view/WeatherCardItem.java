@@ -1,7 +1,7 @@
 package com.example.mewidget.view;
 
 import com.example.mewidget.R;
-import com.example.mewidget.view.DragListView.OnDrager;
+import com.example.mewidget.view.SpreadListView.OnDrager;
 import com.nineoldandroids.view.ViewHelper;
 
 import android.animation.Animator;

@@ -25,7 +25,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
 import com.example.mewidget.provider.Weather;
-import com.example.mewidget.view.DragListView;
+import com.example.mewidget.view.SpreadListView;
 import com.example.mewidget.view.PullToRefreshLayout;
 import com.example.mewidget.view.WeatherCardItemAdapter;
 import com.example.mewidget.view.WeatherCardLoader;
@@ -37,7 +37,7 @@ public class CityMainActivity extends StatusActivity {
 
     private static final int LOADER_ID = 1;
     public static final String CITY_POSITION = "city_position";
-	private DragListView dragListView;
+	private SpreadListView dragListView;
     private WeatherCardItemAdapter mAdapter;
     private WeatherService.MyBinder myBinder;  
 	private PullToRefreshLayout refreshLayout;
@@ -60,7 +60,7 @@ public class CityMainActivity extends StatusActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.city_main_layout);
-        dragListView = (DragListView) findViewById(R.id.first_id);
+        dragListView = (SpreadListView) findViewById(R.id.first_id);
         dragListView.setLastView(LayoutInflater.from(this).inflate(R.layout.weathercard_last_item, null));
         dragListView.setOnItemClickListener(new OnItemClickListener(){
 			@Override
