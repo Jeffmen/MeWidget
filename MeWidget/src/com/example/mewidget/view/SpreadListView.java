@@ -212,9 +212,11 @@ public class SpreadListView extends AdapterView<CursorAdapter> {
 		
 		if(mDataChanged){
 			int oldCurrentY = mCurrentY;
+			int oldOpenPosition = openPosition;
 			initView();
 			removeAllViewsInLayout();
 			mNextY = oldCurrentY;
+			openPosition = oldOpenPosition;
 			mDataChanged = false;
 		}
 
