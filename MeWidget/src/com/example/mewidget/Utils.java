@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import com.example.mewidget.view.WeatherCardItem;
 import com.nineoldandroids.view.ViewHelper;
 
 import android.content.Context;
@@ -109,6 +110,39 @@ public class Utils {
         script.destroy();
 
         return bitmap;
+    }
+    public static void setImageAnimation(WeatherCardItem item, String str){
+    	if(str==null || str.isEmpty()){
+			item.setWeatherIcon1(R.drawable.sunny_200);
+			return;
+    	}
+		if(str.contains("Clear")||str.contains("Sunny")){
+			item.setWeatherIcon1(R.drawable.sunny_200);
+		}
+		else if(str.contains("Cloudy") || str.contains("Mostly Cloudy")){
+			item.setWeatherIcon2ani(R.anim.cloudy_animation);
+		}
+		else if(str.contains("Partly Cloudy")){
+			item.setWeatherIcon1(R.drawable.sunny_200);
+			item.setWeatherIcon2(R.drawable.cloud_200);
+		}
+		else if(str.contains("Rain")){
+			item.setWeatherIcon2ani(R.anim.drizzle_animation);
+		}
+		else if(str.contains("Thunder")){
+			item.setWeatherIcon2ani(R.anim.thunderstorms_animation);
+		}
+		else if(str.contains("Snow")){
+			item.setWeatherIcon2ani(R.anim.snow_animation);
+		}
+		else if(str.contains("Haze")){
+			item.setWeatherIcon1(R.drawable.sunny_200);
+			item.setWeatherIcon2(R.drawable.haze_200);
+		}
+		else if(str.contains("Thundershowers")){
+			item.setWeatherIcon1(R.drawable.sunny_200);
+			item.setWeatherIcon2(R.drawable.slight_drizzle_200);
+		}
     }
     
 	public static int getWeatherBackgroundDrawableID(String str){

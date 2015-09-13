@@ -1,6 +1,7 @@
 package com.example.mewidget.view;
 
 import com.example.mewidget.R;
+import com.example.mewidget.Utils;
 import com.example.mewidget.provider.Weather;
 
 import android.content.Context;
@@ -36,15 +37,18 @@ public class WeatherCardItemAdapter extends CursorAdapter{
 		item.setCityName(cursor.getString(cursor.getColumnIndex(Weather.Columns.CITY_NAME)));
 		int isLocation = cursor.getInt(cursor.getColumnIndex(Weather.Columns.IS_LOCATION));
 		item.setLocationVisable(isLocation == 1 ? View.VISIBLE : View.INVISIBLE);
-		item.setTemperature(cursor.getString(cursor.getColumnIndex(Weather.Columns.CURRENT_TEMP))+"¡ãC");
+		item.setTemperature(cursor.getString(cursor.getColumnIndex(Weather.Columns.CURRENT_TEMP))+"ï¿½ï¿½C");
 		item.setWeather(cursor.getString(cursor.getColumnIndex(Weather.Columns.WEATHER_TEXT1)));
 		item.setHumidity(cursor.getString(cursor.getColumnIndex(Weather.Columns.HUMIDITY))+"%");
 		item.setWindSpeed(cursor.getString(cursor.getColumnIndex(Weather.Columns.WIND_SPEED))+" mph");
-		item.setWeatherIcon1(R.drawable.w_sunny);
-		if(position%2 == 0){
-			item.setWeatherIcon2(R.drawable.w_cloud);
-		}
-        return item;//·µ»ØµÄview´«¸øbindView¡£
+		Utils.setImageAnimation(item, cursor.getString(cursor.getColumnIndex(Weather.Columns.WEATHER_TEXT1)));
+//		if(position%2 == 0){
+//			item.setWeatherIcon2ani(R.anim.drizzle_animation);
+//		}
+//		else{
+//			item.setWeatherIcon1(R.drawable.sunny_200);	
+//		}
+        return item;//ï¿½ï¿½ï¿½Øµï¿½viewï¿½ï¿½ï¿½ï¿½bindViewï¿½ï¿½
 	}
 
 	@Override

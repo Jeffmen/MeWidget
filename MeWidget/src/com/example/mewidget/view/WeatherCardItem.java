@@ -9,6 +9,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.AnimationDrawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -79,10 +80,18 @@ public class WeatherCardItem extends LinearLayout implements OnDrager {
 		this.weatherInfoLayout.setVisibility(visable?View.VISIBLE:View.INVISIBLE);
 	}
 	public void setWeatherIcon1(int id){
+		this.weatherLinear1.setVisibility(View.VISIBLE);
 		this.weahterIcon1.setImageDrawable(getResources().getDrawable(id));
 	}
 	public void setWeatherIcon2(int id){
+		this.weatherLinear2.setVisibility(View.VISIBLE);
 		this.weahterIcon2.setImageDrawable(getResources().getDrawable(id));
+	}	
+	public void setWeatherIcon2ani(int id){
+		this.weatherLinear2.setVisibility(View.VISIBLE);
+		this.weahterIcon2.setBackgroundResource(id);
+		AnimationDrawable anim = (AnimationDrawable) this.weahterIcon2.getBackground();
+		anim.start();
 	}
 	public void startWeatherInfoAni(){
 		if(weatherInfoLayout != null){
