@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
      <array name="weather_item_colors">
+        <item>#DB4437</item>
+        <item>#E91E63</item>
+        <item>#9C27B0</item>
+        <item>#673AB7</item>
         <item>#3F51B5</item>
         <item>#4285F4</item>
         <item>#039BE5</item>
@@ -10,10 +14,6 @@
         <item>#689F38</item>
         <item>#EF6C00</item>
         <item>#FF5722</item>
-        <item>#DB4437</item>
-        <item>#E91E63</item>
-        <item>#9C27B0</item>
-        <item>#673AB7</item>
     </array>
     <color name="widget_red_color">#CD3333</color>
     <color name="widget_text_pink_color">#ff8a80</color>

@@ -441,8 +441,6 @@ public class SpreadListView extends AdapterView<CursorAdapter> {
 		@Override
 		public boolean onScroll(MotionEvent e1, MotionEvent e2,
 				float distanceX, float distanceY) {
-			Log.i("onScroll : ", "onScroll : e1 : " + e1);
-			Log.i("onScroll : ", "onScroll : e2 : " + e2);
 			if(e1 != null && e2 != null){
 	            float angle = Math.abs((e2.getRawY() - e1.getRawY()) / (e2.getRawX() - e1.getRawX()));
 	            angle = (float)Math.toDegrees(Math.atan(angle));
@@ -456,9 +454,8 @@ public class SpreadListView extends AdapterView<CursorAdapter> {
 					}
 				}
 			}
-	        if(isXMove){ //���ƶ�
+	        if(isXMove){
 	            ViewHelper.setTranslationX(touchView, -mMoveX);  
-	            // ͸���Ƚ���  
 	            ViewHelper.setAlpha(touchView, Math.max(0f, Math.min(1f, 1f - 1.2f * Math.abs(mMoveX)/ touchView.getWidth()))); 
 	        }
 			requestLayout();

@@ -1,5 +1,7 @@
 package com.example.mewidget.view;
 
+import java.util.Random;
+
 import com.example.mewidget.R;
 import com.example.mewidget.Utils;
 import com.example.mewidget.provider.Weather;
@@ -8,6 +10,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -21,11 +24,11 @@ public class WeatherCardItemAdapter extends CursorAdapter{
     private static TypedArray sColors;
     private static int sDefaultColor;
     private int position =0;
+    private static int random = (new Random()).nextInt(30);
     
 	public WeatherCardItemAdapter(Context context, Cursor c) {
 		super(context, c);
 		this.mContext = context;
-		//this.mDataItem = data;
         sDefaultColor = mContext.getResources().getColor(R.color.weather_item_default_color);
         sColors = mContext.getResources().obtainTypedArray(R.array.weather_item_colors);
 	}
@@ -42,20 +45,14 @@ public class WeatherCardItemAdapter extends CursorAdapter{
 		item.setHumidity(cursor.getString(cursor.getColumnIndex(Weather.Columns.HUMIDITY))+"%");
 		item.setWindSpeed(cursor.getString(cursor.getColumnIndex(Weather.Columns.WIND_SPEED))+" mph");
 		Utils.setImageAnimation(item, cursor.getString(cursor.getColumnIndex(Weather.Columns.WEATHER_TEXT1)));
-//		if(position%2 == 0){
-//			item.setWeatherIcon2ani(R.anim.drizzle_animation);
-//		}
-//		else{
-//			item.setWeatherIcon1(R.drawable.sunny_200);	
-//		}
         return item;
 	}
 
 	@Override
 	public void bindView(View view, Context context, Cursor cursor) {
+		position = cursor.getPosition() + random;
 		view.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-		view.setBackgroundColor(pickColor(cursor.getString(cursor.getColumnIndex(Weather.Columns.CITY_NAME))));
-		position++;
+		view.setBackgroundColor(sColors.getColor(position % sColors.length(), sDefaultColor));
 	}
 	
     private int pickColor(final String identifier) {
