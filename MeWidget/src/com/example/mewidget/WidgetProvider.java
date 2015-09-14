@@ -70,12 +70,20 @@ public class WidgetProvider extends AppWidgetProvider{
         	int imageId = Utils.getWeatherIconDrawableID(c.getString(c.getColumnIndex(Weather.Columns.WEATHER_TEXT1)));
         	remoteViews.setImageViewResource(R.id.weatherIcon2, imageId);
         	if(Utils.isShowSun(imageId)){
-            	remoteViews.setViewVisibility(R.id.weatherLinear1, View.VISIBLE);
-            	remoteViews.setViewVisibility(R.id.weatherLinear2, View.VISIBLE);
+        		if(imageId == R.drawable.sunny_200){
+                	remoteViews.setViewVisibility(R.id.weatherLinear1, View.VISIBLE);
+        		}
+        		else{
+                	remoteViews.setViewVisibility(R.id.weatherLinear1, View.VISIBLE);
+                	remoteViews.setViewVisibility(R.id.weatherLinear2, View.VISIBLE);
+        		}
         	}
         	else{
             	remoteViews.setViewVisibility(R.id.weatherLinear2, View.VISIBLE);
         	}
+        }
+        else{
+        	remoteViews.setViewVisibility(R.id.weatherLinear1, View.VISIBLE);
         }
 	    
 		Intent fullIntent = new Intent(context,CityMainActivity.class); 

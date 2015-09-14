@@ -45,7 +45,6 @@ public class Utils {
     }
 	
     public static byte[] convertIsToByteArray(InputStream inputStream) {
-        // TODO Auto-generated method stub     
         ByteArrayOutputStream baos=new ByteArrayOutputStream();
         byte buffer[]=new byte[1024];
         int length=0;
@@ -56,7 +55,6 @@ public class Utils {
             inputStream.close();
             baos.flush();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return baos.toByteArray();
@@ -112,35 +110,37 @@ public class Utils {
         return bitmap;
     }
     
-    public static int getWeatherIconDrawableID(String str){
+    public static int getWeatherIconDrawable200ID(String str){
     	if(str==null || str.isEmpty()){
 			return 0;
     	}
 		if(str.contains("Clear")||str.contains("Sunny")){
 			return R.drawable.sunny_200;
 		}
-		else if(str.contains("Cloudy") || str.contains("Mostly Cloudy")){
-			return R.drawable.cloudy_200_ani_1;
-		}
 		else if(str.contains("Partly Cloudy")){
 			return R.drawable.cloud_200;
 		}
-		else if(str.contains("Rain")){
-			return R.drawable.drizzle_200;
+		else if(str.contains("Cloudy") || str.contains("Mostly Cloudy")){
+			return R.drawable.cloudy_200_ani_1;
 		}
-		else if(str.contains("Thunder")){
-			return R.drawable.thunderstorms_200;
-		}
-		else if(str.contains("Snow")){
-			return R.drawable.snow_200;
-		}
+//		else if(str.contains("Rain")){
+//			return R.drawable.drizzle_200;
+//		}
+//		else if(str.contains("Thunder")){
+//			return R.drawable.thunderstorms_200;
+//		}
+//		else if(str.contains("Snow")){
+//			return R.drawable.snow_200;
+//		}
 		else if(str.contains("Haze")){
 			return R.drawable.haze_200;
 		}
 		else if(str.contains("Thundershowers")){
 			return R.drawable.slight_drizzle_200;
 		}
+		return R.drawable.sunny_200;
     }
+    
     public static void setImageAnimation(WeatherCardItem item, String str){
     	if(str==null || str.isEmpty()){
 			item.setWeatherIcon1(R.drawable.sunny_200);
@@ -149,12 +149,12 @@ public class Utils {
 		if(str.contains("Clear")||str.contains("Sunny")){
 			item.setWeatherIcon1(R.drawable.sunny_200);
 		}
-		else if(str.contains("Cloudy") || str.contains("Mostly Cloudy")){
-			item.setWeatherIcon2ani(R.anim.cloudy_animation);
-		}
 		else if(str.contains("Partly Cloudy")){
 			item.setWeatherIcon1(R.drawable.sunny_200);
 			item.setWeatherIcon2(R.drawable.cloud_200);
+		}
+		else if(str.contains("Cloudy") || str.contains("Mostly Cloudy")){
+			item.setWeatherIcon2ani(R.anim.cloudy_animation);
 		}
 		else if(str.contains("Rain")){
 			item.setWeatherIcon2ani(R.anim.drizzle_animation);

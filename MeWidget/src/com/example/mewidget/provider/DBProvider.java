@@ -24,13 +24,13 @@ public class DBProvider extends ContentProvider {
 	private static final int WEATHER_CITY_NAME = 6;
 	private static final int WEATHER_IS_LOCATION = 7;
 	static {
-	    // µ±Ã»ÓÐÆ¥Åä³É¹¦ÊÇÊ±£¬·µ»ØNO_MATCHµÄÖµ
+	    // ï¿½ï¿½Ã»ï¿½ï¿½Æ¥ï¿½ï¿½É¹ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½NO_MATCHï¿½ï¿½Öµ
 	    uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 		//content://com.example.mewidget.provider/city
 	    uriMatcher.addURI(AUTHORITY, City.TABLE_NAME, CITY);
 		//content://com.example.mewidget.provider/city/21
 	    uriMatcher.addURI(AUTHORITY, City.TABLE_NAME+"/#", CITY_ID);
-		//content://com.example.mewidget.provider/city/filter/ÉÏº£
+		//content://com.example.mewidget.provider/city/filter/ï¿½Ïºï¿½
 	    uriMatcher.addURI(AUTHORITY, City.TABLE_NAME+"/filter/*", CITY_NAME_FILTER);
 	    uriMatcher.addURI(AUTHORITY, Weather.TABLE_NAME, WEATHER);
 	    uriMatcher.addURI(AUTHORITY, Weather.TABLE_NAME+"/cityid/#", WEATHER_CITY_ID);
@@ -50,7 +50,6 @@ public class DBProvider extends ContentProvider {
 	@Override
 	public Cursor query(Uri uri, String[] projection, String selection,
 			String[] selectionArgs, String sortOrder) {
-		// TODO Auto-generated method stub
         SQLiteQueryBuilder sqb = new SQLiteQueryBuilder();
         String orderColumns = sortOrder;
 		switch(uriMatcher.match(uri)){

@@ -23,7 +23,7 @@ public class WeatherService extends Service {
 	private MyBinder mBinder = new MyBinder();
 	
 	public enum Type{
-		ALL,//原有城市
+		ALL,//所有城市
 		LOCATION,//定位城市
 		OTHER//除了定位城市
 	}
