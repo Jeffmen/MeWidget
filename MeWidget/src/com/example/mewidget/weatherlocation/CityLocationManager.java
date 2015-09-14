@@ -56,7 +56,7 @@ public class CityLocationManager {
         	myBinder = (WeatherService.MyBinder) service;   
             if(currentLocation != null){
                 myBinder.latLngToCity(String.valueOf(currentLocation.getLatitude()), String.valueOf(currentLocation.getLongitude()));  
-    			Toast.makeText(mContext, "¶¨Î»³É¹¦¡£¡£¡£¡£", Toast.LENGTH_SHORT).show();
+    			Toast.makeText(mContext, "å®šä½æˆåŠŸã€‚ã€‚ã€‚ã€‚", Toast.LENGTH_SHORT).show();
             }
             else{
             	myBinder.weatherInfoDownLoad(Type.LOCATION);
@@ -71,7 +71,7 @@ public class CityLocationManager {
 
 			if(!checkGpsAvailable()
 					&& !checkNetworkAvailable()) {
-				Toast.makeText(mContext, "Çë´ò¿ª¶¨Î»¹¦ÄÜ¡£¡£¡£¡£", Toast.LENGTH_SHORT).show();
+				Toast.makeText(mContext, "è¯·æ‰“å¼€å®šä½åŠŸèƒ½ã€‚ã€‚ã€‚ã€‚", Toast.LENGTH_SHORT).show();
 				return;
 			}
 			startLocation();
@@ -194,7 +194,7 @@ public class CityLocationManager {
 			removeGpsLocationListener();
 			removeNetworkLocationListener();
 			if (currentLocation == null) {
-				Toast.makeText(mContext, "¶¨Î»Ê§°Ü¡£¡£¡£¡£", Toast.LENGTH_SHORT).show();
+				Toast.makeText(mContext, "å®šä½å¤±è´¥ã€‚ã€‚ã€‚ã€‚", Toast.LENGTH_SHORT).show();
 			}
 			doUpdateLocation();
 		} catch (Exception e) {

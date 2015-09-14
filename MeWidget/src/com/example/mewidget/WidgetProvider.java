@@ -4,15 +4,19 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import com.example.mewidget.provider.Weather;
+
 import android.animation.AnimatorSet;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RemoteViews;
 import android.widget.Toast;
@@ -58,7 +62,22 @@ public class WidgetProvider extends AppWidgetProvider{
 		date = cal.get(Calendar.DATE); 
 		remoteViews.setTextViewText(R.id.dayText5_id, String.valueOf(date));
 		remoteViews.setInt(R.id.dayText5_id, "setTextColor", Color.argb(20,0,0,0));
-		
+
+    	Uri uri = Uri.withAppendedPath(Weather.CONTENT_URI, "/islocation/1");
+		Cursor c = context.getContentResolver().query(uri, Weather.PROJECTION_WEATHER_INFO, null, null, null);
+
+        if(c == null || c.getCount() == 0){
+        	int imageId = Utils.getWeatherIconDrawableID(c.getString(c.getColumnIndex(Weather.Columns.WEATHER_TEXT1)));
+        	remoteViews.setImageViewResource(R.id.weatherIcon2, imageId);
+        	if(Utils.isShowSun(imageId)){
+            	remoteViews.setViewVisibility(R.id.weatherLinear1, View.VISIBLE);
+            	remoteViews.setViewVisibility(R.id.weatherLinear2, View.VISIBLE);
+        	}
+        	else{
+            	remoteViews.setViewVisibility(R.id.weatherLinear2, View.VISIBLE);
+        	}
+        }
+	    
 		Intent fullIntent = new Intent(context,CityMainActivity.class); 
 		PendingIntent Pfullintent = PendingIntent.getActivity(context, 0, fullIntent,PendingIntent.FLAG_CANCEL_CURRENT); 
 		remoteViews.setOnClickPendingIntent(R.id.widget_main, Pfullintent);

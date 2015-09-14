@@ -30,18 +30,15 @@ public class CitySearchRequest {
 	}
 	
 	public List<CityInfo> request(){
-		// 获取解析数据
 		if(!searchStr.isEmpty()){
 			String strUrl = String.format(REQUEST_URL, searchStr);
 			try {
 				URL url = new URL(strUrl);
-				// 解析XML文件
 				SAXParserFactory factory = SAXParserFactory.newInstance();
 				SAXParser parser = factory.newSAXParser();
 				XMLReader xmlreader = parser.getXMLReader();
 				CityXMLHandler handler = new CityXMLHandler();
 				xmlreader.setContentHandler(handler);
-				// 网络获取接口返回的XML文件
 				InputStreamReader isr = new InputStreamReader(url.openStream());
 				InputSource is = new InputSource(isr);
 				xmlreader.parse(is);

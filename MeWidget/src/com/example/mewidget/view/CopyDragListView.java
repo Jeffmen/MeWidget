@@ -513,7 +513,6 @@ public class CopyDragListView extends AdapterView<CursorAdapter> {
             public void onAnimationEnd(Animator animation) {  
         		animationIsDoing = false;
             	if(!openViewExist){
-            		//浣嗘暣涓〉闈㈡病鏈夋墦寮�鐨勯〉闈㈡椂锛岀偣鍑荤殑椤甸潰鎵撳紑鍚庯紝浣縨MaxY娌℃湁澧為暱originalHeight*2, 鎵�浠ュ噺灏弇NextY鐨勫��
             		mNextY += -originalHeight*2;
             		notMove = true;
             	}

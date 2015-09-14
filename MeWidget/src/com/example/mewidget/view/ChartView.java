@@ -27,30 +27,30 @@ import android.view.View;
 import android.view.GestureDetector.OnGestureListener;
 
 public abstract class ChartView extends View {
-	private static final float LEFT = 1.5F / 16F, TOP = 5 / 16F, RIGHT = 14.5F / 16F, BOTTOM = 13F / 16F;// Íø¸ñÇøÓòÏà¶ÔÎ»ÖÃ
-	private static final float TIME_X = 3 / 32F, TIME_Y = 1 / 16F, MONEY_X = 31 / 32F, MONEY_Y = 15 / 16F;// ÎÄ×Ö×ø±êÏà¶ÔÎ»ÖÃ
-	private static final float TEXT_SIGN = 1 / 16F;// ÎÄ×ÖÏà¶Ô´óĞ¡
-	private static final float THICK_LINE_WIDTH = 1 / 128F, THIN_LINE_WIDTH = 1 / 512F;// ´ÖÏßºÍÏ¸ÏßÏà¶Ô´óĞ¡
+	private static final float LEFT = 1.5F / 16F, TOP = 5 / 16F, RIGHT = 14.5F / 16F, BOTTOM = 13F / 16F;// ç½‘æ ¼åŒºåŸŸç›¸å¯¹ä½ç½®
+	private static final float TIME_X = 3 / 32F, TIME_Y = 1 / 16F, MONEY_X = 31 / 32F, MONEY_Y = 15 / 16F;// æ–‡å­—åæ ‡ç›¸å¯¹ä½ç½®
+	private static final float TEXT_SIGN = 1 / 16F;// æ–‡å­—ç›¸å¯¹å¤§å°
+	private static final float THICK_LINE_WIDTH = 1 / 128F, THIN_LINE_WIDTH = 1 / 512F;// ç²—çº¿å’Œç»†çº¿ç›¸å¯¹å¤§å°
     private static int ANIMATION_DURATION = 300;
     private static int Y_DIVISOR_LENGTH = 8;
 
-	private TextPaint mTextPaint;// ÎÄ×Ö»­±Ê
-	private Paint linePaint, pointPaint, areaPaint;// ÏßÌõ»­±ÊºÍµã»­±Ê
-	private Path mPath, mAreaPath;// Â·¾¶¶ÔÏó
-	private Bitmap mBitmap;// »æÖÆÇúÏßµÄBtimap¶ÔÏó
-	private Canvas mCanvas;// ×°ÔØmBitmapµÄCanvas¶ÔÏó
+	private TextPaint mTextPaint;// æ–‡å­—ç”»ç¬”
+	private Paint linePaint, pointPaint, areaPaint;// çº¿æ¡ç”»ç¬”å’Œç‚¹ç”»ç¬”
+	private Path mPath, mAreaPath;// è·¯å¾„å¯¹è±¡
+	private Bitmap mBitmap;// ç»˜åˆ¶æ›²çº¿çš„Btimapå¯¹è±¡
+	private Canvas mCanvas;// è£…è½½mBitmapçš„Canvaså¯¹è±¡
 
-	private List<ForecastWeatherInfo> pointFs;// Êı¾İÁĞ±í
-	private float[] rulerX, rulerY;// xyÖáÏò¿Ì¶È
+	private List<ForecastWeatherInfo> pointFs;// æ•°æ®åˆ—è¡¨
+	private float[] rulerX, rulerY;// xyè½´å‘åˆ»åº¦
 
-	private String signX, signY;// ÉèÖÃXºÍY×ø±ê·Ö±ğ±íÊ¾Ê²Ã´µÄÎÄ×Ö
-	private float textY_X, textY_Y, textX_X, textX_Y;// ÎÄ×Ö×ø±ê
-	private float textSignSzie;// xy×ø±ê±êÊ¶ÎÄ±¾×ÖÌå´óĞ¡
-	private float thickLineWidth, thinLineWidth;// ´ÖÏßºÍÏ¸Ïß¿í¶È
-	private float left, top, right, bottom;// Íø¸ñÇøÓò×óÉÏÓÒÏÂÁ½µã×ø±ê
-	private int viewSize_x, viewSize_y;// ¿Ø¼ş³ß´ç
-	private float maxY;// ºá×İÖáÏò×î´ó¿Ì¶È
-	private float spaceX, spaceY;// ¿Ì¶È¼ä¸ô
+	private String signX, signY;// è®¾ç½®Xå’ŒYåæ ‡åˆ†åˆ«è¡¨ç¤ºä»€ä¹ˆçš„æ–‡å­—
+	private float textY_X, textY_Y, textX_X, textX_Y;// æ–‡å­—åæ ‡
+	private float textSignSzie;// xyåæ ‡æ ‡è¯†æ–‡æœ¬å­—ä½“å¤§å°
+	private float thickLineWidth, thinLineWidth;// ç²—çº¿å’Œç»†çº¿å®½åº¦
+	private float left, top, right, bottom;// ç½‘æ ¼åŒºåŸŸå·¦ä¸Šå³ä¸‹ä¸¤ç‚¹åæ ‡
+	private int viewSize_x, viewSize_y;// æ§ä»¶å°ºå¯¸
+	private float maxY;// æ¨ªçºµè½´å‘æœ€å¤§åˆ»åº¦
+	private float spaceX, spaceY;// åˆ»åº¦é—´éš”
 	private int selectPosition;
     private float phase, selectCricle_x;
     private int xDivisor, yDivisor;
@@ -60,16 +60,16 @@ public abstract class ChartView extends View {
 	public ChartView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 
-		// ÊµÀı»¯ÎÄ±¾»­±Ê²¢ÉèÖÃ²ÎÊı
+		// å®ä¾‹åŒ–æ–‡æœ¬ç”»ç¬”å¹¶è®¾ç½®å‚æ•°
 		mTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG | Paint.LINEAR_TEXT_FLAG);
 		mTextPaint.setColor(Color.WHITE);
 
-		// ÊµÀı»¯ÏßÌõ»­±Ê²¢ÉèÖÃ²ÎÊı
+		// å®ä¾‹åŒ–çº¿æ¡ç”»ç¬”å¹¶è®¾ç½®å‚æ•°
 		linePaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
 		linePaint.setStyle(Paint.Style.STROKE);
 		linePaint.setColor(Color.WHITE);
 
-		// ÊµÀı»¯µã»­±Ê²¢ÉèÖÃ²ÎÊı
+		// å®ä¾‹åŒ–ç‚¹ç”»ç¬”å¹¶è®¾ç½®å‚æ•°
 		pointPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
 		pointPaint.setStyle(Paint.Style.FILL);
 		pointPaint.setColor(Color.WHITE);
@@ -103,7 +103,7 @@ public abstract class ChartView extends View {
 
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-// ÔÚÎÒÃÇÃ»Ñ§Ï°²âÁ¿¿Ø¼şÖ®Ç°Ç¿ÖÆ¿í¸ßÒ»ÖÂ
+// åœ¨æˆ‘ä»¬æ²¡å­¦ä¹ æµ‹é‡æ§ä»¶ä¹‹å‰å¼ºåˆ¶å®½é«˜ä¸€è‡´
 //		super.onMeasure(widthMeasureSpec, widthMeasureSpec);
 //      int specMode = MeasureSpec.getMode(widthMeasureSpec);
         int specSize = MeasureSpec.getSize(widthMeasureSpec);
@@ -112,52 +112,52 @@ public abstract class ChartView extends View {
 
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-		// »ñÈ¡¿Ø¼ş³ß´ç
+		// è·å–æ§ä»¶å°ºå¯¸
 		viewSize_x = w;
 		viewSize_y = h;
 
-		// ¼ÆËã×İÖá±êÊ¶ÎÄ±¾×ø±ê
+		// è®¡ç®—çºµè½´æ ‡è¯†æ–‡æœ¬åæ ‡
 		textY_X = viewSize_x * TIME_X;
 		textY_Y = viewSize_y * TIME_Y;
 
-		// ¼ÆËãºáÖá±êÊ¶ÎÄ±¾×ø±ê
+		// è®¡ç®—æ¨ªè½´æ ‡è¯†æ–‡æœ¬åæ ‡
 		textX_X = viewSize_x * MONEY_X;
 		textX_Y = viewSize_y * MONEY_Y;
 
-		// ¼ÆËãxyÖá±êÊ¶ÎÄ±¾´óĞ¡
+		// è®¡ç®—xyè½´æ ‡è¯†æ–‡æœ¬å¤§å°
 		textSignSzie = viewSize_x * TEXT_SIGN;
 
-		// ¼ÆËãÍø¸ñ×óÉÏÓÒÏÂÁ½µã×ø±ê
+		// è®¡ç®—ç½‘æ ¼å·¦ä¸Šå³ä¸‹ä¸¤ç‚¹åæ ‡
 		left = viewSize_x * LEFT;
 		top = viewSize_y * TOP;
 		right = viewSize_x * RIGHT;
 		bottom = viewSize_y * BOTTOM;
 
-		// ¼ÆËã´ÖÏß¿í¶È
+		// è®¡ç®—ç²—çº¿å®½åº¦
 		thickLineWidth = viewSize_x * THICK_LINE_WIDTH;
 		thinLineWidth = viewSize_x * THIN_LINE_WIDTH;
 		
 		xDivisor = pointFs.size()+1;
 		yDivisor = 3;
 
-		// ¼ÆËã×İÖáÊı¾İ×î´óÖµ
+		// è®¡ç®—çºµè½´æ•°æ®æœ€å¤§å€¼
 		maxY = 0;
 		for (int j = 0; j < pointFs.size(); j++) {
 			if (maxY < pointFs.get(j).getHighTemp()) {
 				maxY = pointFs.get(j).getHighTemp();
 			}
 		}
-		// ¼ÆËã×İÖá×î½üµÄÄÜ±»countÕû³ıµÄÖµ
+		// è®¡ç®—çºµè½´æœ€è¿‘çš„èƒ½è¢«countæ•´é™¤çš„å€¼
 		int remainderY = ((int) maxY) % (yDivisor);
 		maxY = remainderY == 0 ? ((int) maxY) : yDivisor - remainderY + ((int) maxY);
 
-		// Éú³É×İÖá¿Ì¶ÈÖµ
+		// ç”Ÿæˆçºµè½´åˆ»åº¦å€¼
 		rulerY = new float[yDivisor+1];
 		for (int i = 0; i < rulerY.length; i++) {
 			rulerY[i] = maxY / (yDivisor) * i;
 		}
 
-		// ¼ÆËãºá×İ×ø±ê¿Ì¶È¼ä¸ô
+		// è®¡ç®—æ¨ªçºµåæ ‡åˆ»åº¦é—´éš”
 		spaceY = viewSize_y * (BOTTOM - TOP) / yDivisor;
 		spaceX = viewSize_x * (RIGHT - LEFT) / xDivisor;
 		
@@ -166,13 +166,13 @@ public abstract class ChartView extends View {
 
 	@Override
 	protected void onDraw(Canvas canvas) {
-		// Ìî³ä±³¾°
+		// å¡«å……èƒŒæ™¯
 		//canvas.drawColor(0xFF9596C4);
-		// »æÖÆ±êÊ¶ÔªËØ
+		// ç»˜åˆ¶æ ‡è¯†å…ƒç´ 
 		drawSign(canvas);
-		// »æÖÆÍø¸ñ
+		// ç»˜åˆ¶ç½‘æ ¼
 		drawGrid(canvas);
-		// »æÖÆÇúÏß
+		// ç»˜åˆ¶æ›²çº¿
 		drawPolyline(canvas);
 	}
 
@@ -191,13 +191,13 @@ public abstract class ChartView extends View {
 	}
 	
 	private void drawPolyline(Canvas canvas) {
-			// Éú³ÉÒ»¸öBitmap¶ÔÏó´óĞ¡ºÍÎÒÃÇµÄÍø¸ñ´óĞ¡Ò»ÖÂ
+			// ç”Ÿæˆä¸€ä¸ªBitmapå¯¹è±¡å¤§å°å’Œæˆ‘ä»¬çš„ç½‘æ ¼å¤§å°ä¸€è‡´
 			mBitmap = Bitmap.createBitmap((int) (viewSize_x * (RIGHT - LEFT)), 
 					                      (int) (viewSize_y * (BOTTOM - TOP)), Bitmap.Config.ARGB_8888);
-			// ½«Bitmap×¢ÈëCanvas
+			// å°†Bitmapæ³¨å…¥Canvas
 			mCanvas.setBitmap(mBitmap);
 	
-			// Îª»­²¼Ìî³äÒ»¸ö°ëÍ¸Ã÷µÄºìÉ«
+			// ä¸ºç”»å¸ƒå¡«å……ä¸€ä¸ªåŠé€æ˜çš„çº¢è‰²
 			//mCanvas.drawARGB(75, 255, 0, 0);
 
 			float textXRulerSize = textSignSzie / 2F, textWidth;
@@ -232,20 +232,20 @@ public abstract class ChartView extends View {
 	
 				mPath.lineTo(x, y);
 			}
-			// ÉèÖÃPathEffect
+			// è®¾ç½®PathEffect
 //            Path p = new Path();  
 //            p.addRect(0, 0, 8, 8, Path.Direction.CCW); 
 //			linePaint.setPathEffect(new PathDashPathEffect(p,12,phase,PathDashPathEffect.Style.ROTATE));
 			//linePaint.setPathEffect(new CornerPathEffect(0));
 
-			// ÖØÖÃÏßÌõ¿í¶È
+			// é‡ç½®çº¿æ¡å®½åº¦
 			linePaint.setColor(Color.RED);
 			linePaint.setStrokeWidth(thickLineWidth);
 	
-			// ½«Path»æÖÆµ½ÎÒÃÇ×Ô¶¨µÄCanvasÉÏ
+			// å°†Pathç»˜åˆ¶åˆ°æˆ‘ä»¬è‡ªå®šçš„Canvasä¸Š
 			canvas.drawPath(mPath, linePaint);
 	
-			// ½«mBitmap»æÖÆµ½Ô­À´µÄcanvas
+			// å°†mBitmapç»˜åˆ¶åˆ°åŸæ¥çš„canvas
 			//canvas.drawBitmap(mBitmap, left, top + spaceY, null);
 			
 			mPath.reset();
@@ -281,7 +281,7 @@ public abstract class ChartView extends View {
 				}
 			}
 			mAreaPath.close();	
-			// ÖØÖÃÏßÌõ¿í¶È
+			// é‡ç½®çº¿æ¡å®½åº¦
 			linePaint.setColor(Color.BLUE);
 			linePaint.setStrokeWidth(thickLineWidth);
 			//int sc = canvas.saveLayerAlpha(0, 0, canvas.getWidth(), canvas.getHeight(), 25, Canvas.ALL_SAVE_FLAG);
@@ -291,30 +291,30 @@ public abstract class ChartView extends View {
 	}
 
 	private void drawGrid(Canvas canvas) {
-		// Ëø¶¨»­²¼
+		// é”å®šç”»å¸ƒ
 		canvas.save();
 
-		// ÉèÖÃÏßÌõ»­±Ê¿í¶È
+		// è®¾ç½®çº¿æ¡ç”»ç¬”å®½åº¦
 		linePaint.setColor(Color.WHITE);
 		linePaint.setStrokeWidth(thickLineWidth);
 
-		// ¼ÆËãxyÖáPath
+		// è®¡ç®—xyè½´Path
 		mPath.moveTo(left, bottom);
 		mPath.lineTo(right, bottom);
 		canvas.drawPath(mPath, linePaint);
 
-		// »æÖÆÏßÌõ
+		// ç»˜åˆ¶çº¿æ¡
 		drawLines(canvas);
-		// »æÖÆ¿Ì¶È
+		// ç»˜åˆ¶åˆ»åº¦
 		drawRulers(canvas);
-		// ÊÍ·Å»­²¼
+		// é‡Šæ”¾ç”»å¸ƒ
 		canvas.restore();
 	}
 	
 	private void drawLines(Canvas canvas) {
-		// Ëø¶¨»­²¼²¢ÉèÖÃ»­²¼Í¸Ã÷¶ÈÎª75%
+		// é”å®šç”»å¸ƒå¹¶è®¾ç½®ç”»å¸ƒé€æ˜åº¦ä¸º75%
 		int sc = canvas.saveLayerAlpha(0, 0, canvas.getWidth(), canvas.getHeight(), 75, Canvas.ALL_SAVE_FLAG);
-		// »æÖÆºá×İÏß¶Î
+		// ç»˜åˆ¶æ¨ªçºµçº¿æ®µ
 		linePaint.setStrokeWidth(thickLineWidth);
 		for (float x = left + spaceX; x < right; x += spaceX) {
 			canvas.drawLine(x, top + spaceY * yDivisor-Y_DIVISOR_LENGTH, x, top + spaceY * yDivisor, linePaint);
@@ -323,7 +323,7 @@ public abstract class ChartView extends View {
 		for (float y = bottom - spaceY; y >= top; y -= spaceY) {
 			canvas.drawLine(right, y, right - spaceX * xDivisor, y, linePaint);
 		}
-		// »¹Ô­»­²¼
+		// è¿˜åŸç”»å¸ƒ
 		canvas.restoreToCount(sc);
 	}
 	
@@ -331,10 +331,10 @@ public abstract class ChartView extends View {
 		pointPaint.setColor(Color.GREEN);
 		canvas.drawCircle(selectCricle_x, bottom + textSignSzie, thickLineWidth*6, pointPaint);
 		
-		// »æÖÆºá×İÖáÏò¿Ì¶ÈÖµ
+		// ç»˜åˆ¶æ¨ªçºµè½´å‘åˆ»åº¦å€¼
 		int index_x = 0, index_y = 1;
 		float textWidth=0;	
-		// ¼ÆËã¿Ì¶ÈÎÄ×Ö³ß´ç
+		// è®¡ç®—åˆ»åº¦æ–‡å­—å°ºå¯¸
 		float textXRulerSize = textSignSzie / 2F;
 		mTextPaint.setTextSize(textXRulerSize);
     	mTextPaint.setColor(Color.WHITE);
@@ -347,29 +347,29 @@ public abstract class ChartView extends View {
 		float textYRulerSize = textSignSzie / 3F;
 		mTextPaint.setTextSize(textYRulerSize);
 		for (float y = bottom - spaceY; y >= top; y -= spaceY) {
-		    canvas.drawText(String.valueOf((int)rulerY[index_y])+"¡ãC", left - thickLineWidth, y + textYRulerSize, mTextPaint);
+		    canvas.drawText(String.valueOf((int)rulerY[index_y])+"Â°C", left - thickLineWidth, y + textYRulerSize, mTextPaint);
 			index_y++;
 		}
 	}
 
 	private void drawSign(Canvas canvas) {
-		// Ëø¶¨»­²¼
+		// é”å®šç”»å¸ƒ
 		canvas.save();
 
-		// ÉèÖÃÎÄ±¾»­±ÊÎÄ×Ö³ß´ç
+		// è®¾ç½®æ–‡æœ¬ç”»ç¬”æ–‡å­—å°ºå¯¸
 		mTextPaint.setTextSize(textSignSzie);
 
-		// »æÖÆ×İÖá±êÊ¶ÎÄ×Ö
+		// ç»˜åˆ¶çºµè½´æ ‡è¯†æ–‡å­—
 		if(!signY.isEmpty()){
 			mTextPaint.setTextAlign(Paint.Align.LEFT);
 			canvas.drawText(signY, textY_X, textY_Y, mTextPaint);
 		}
-		// »æÖÆºáÖá±êÊ¶ÎÄ×Ö
+		// ç»˜åˆ¶æ¨ªè½´æ ‡è¯†æ–‡å­—
 		if(!signX.isEmpty()){
 			mTextPaint.setTextAlign(Paint.Align.RIGHT);
 			canvas.drawText(signX, textX_X, textX_Y, mTextPaint);
 		}
-		// ÊÍ·Å»­²¼
+		// é‡Šæ”¾ç”»å¸ƒ
 		canvas.restore();
 	}
 

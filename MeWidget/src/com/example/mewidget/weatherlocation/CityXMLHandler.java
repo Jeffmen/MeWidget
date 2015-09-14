@@ -27,7 +27,7 @@ public class CityXMLHandler extends DefaultHandler {
 		super.endDocument();
 	}
 
-	//<s k="Guangzhou (¹ãÖÝÊÐ)" d="pt:iso=CN&woeid=2161838&lon=113.268&lat=23.1074&s=Guangdong&c=China&country_woeid=23424781&pn=¹ãÖÝÊÐ&n=Guangzhou (¹ãÖÝÊÐ), Guangdong, China"/>
+	//<s k="Guangzhou (å¹¿å·žå¸‚)" d="pt:iso=CN&woeid=2161838&lon=113.268&lat=23.1074&s=Guangdong&c=China&country_woeid=23424781&pn=å¹¿å·žå¸‚&n=Guangzhou (å¹¿å·žå¸‚), Guangdong, China"/>
 	@Override
 	public void startElement(String uri, String localName, String qName,
 			Attributes attributes) throws SAXException {

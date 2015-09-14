@@ -23,35 +23,35 @@ public class PullToRefreshLayout extends RelativeLayout
 {  
     public static int ANIMATION_DURATION = 300;
     public static final String TAG = "PullToRefreshLayout";  
-    // ÏÂÀ­Ë¢ĞÂ  
+    // ä¸‹æ‹‰åˆ·æ–°  
     public static final int PULL_TO_REFRESH = 0;  
     public static final int RELEASE_TO_REFRESH = 1; 
     public static final int REFRESHING = 2; 
-    // µ±Ç°×´Ì¬  
+    // å½“å‰çŠ¶æ€  
     private int state = PULL_TO_REFRESH;  
-    // Ë¢ĞÂ»Øµ÷½Ó¿Ú  
+    // åˆ·æ–°å›è°ƒæ¥å£  
     private OnRefreshListener mListener;  
-    // Ë¢ĞÂ³É¹¦  
+    // åˆ·æ–°æˆåŠŸ  
     public static final int REFRESH_SUCCEED = 0;  
     public static final int REFRESH_FAIL = 1;  
-    // ÏÂÀ­Í·  
+    // ä¸‹æ‹‰å¤´  
     private View headView; 
     private View contentView;  
-    // °´ÏÂY×ø±ê£¬ÉÏÒ»¸öÊÂ¼şµãY×ø±ê  
+    // æŒ‰ä¸‹Yåæ ‡ï¼Œä¸Šä¸€ä¸ªäº‹ä»¶ç‚¹Yåæ ‡  
     private PointF lastEvent = new PointF(); 
-    // ÏÂÀ­µÄ¾àÀë  
+    // ä¸‹æ‹‰çš„è·ç¦»  
     public float moveDeltaY = 0;  
-    // ÊÍ·ÅË¢ĞÂµÄ¾àÀë  
+    // é‡Šæ”¾åˆ·æ–°çš„è·ç¦»  
     private float mOffsetToRefresh = 200;  
     private float headViewWidth = 0;
-    // »Ø¹öËÙ¶È  
+    // å›æ»šé€Ÿåº¦  
     public float MOVE_SPEED = 8;   
     private int mPagingTouchSlop; 
-    // ÊÇ·ñ¿ÉÒÔÏÂÀ­  
+    // æ˜¯å¦å¯ä»¥ä¸‹æ‹‰  
     private boolean canPull = true; 
     private boolean mDisableWhenHorizontalMove = true; 
     private boolean mPreventForHorizontal = false;
-    // ÔÚË¢ĞÂ¹ı³ÌÖĞ»¬¶¯²Ù×÷  
+    // åœ¨åˆ·æ–°è¿‡ç¨‹ä¸­æ»‘åŠ¨æ“ä½œ  
     //private boolean isTouchInRefreshing = false;
     private float radio = 2;  
 
@@ -144,7 +144,7 @@ public class PullToRefreshLayout extends RelativeLayout
     {  
         if (canPull)  
         {  
-            // ¸Ä±ä×Ó¿Ø¼şµÄ²¼¾Ö  
+            // æ”¹å˜å­æ§ä»¶çš„å¸ƒå±€  
             headView.layout(0, (int) moveDeltaY - headView.getMeasuredHeight(), headView.getMeasuredWidth(), (int) moveDeltaY);  
             contentView.layout(0, (int) moveDeltaY, contentView.getMeasuredWidth(), (int) moveDeltaY + contentView.getMeasuredHeight());  
         }
@@ -209,7 +209,7 @@ public class PullToRefreshLayout extends RelativeLayout
     }
     
     /** 
-     * Íê³ÉË¢ĞÂ²Ù×÷£¬ÏÔÊ¾Ë¢ĞÂ½á¹û 
+     * å®Œæˆåˆ·æ–°æ“ä½œï¼Œæ˜¾ç¤ºåˆ·æ–°ç»“æœ 
      */  
     public void refreshFinish(int refreshResult)  
     {  
@@ -297,19 +297,19 @@ public class PullToRefreshLayout extends RelativeLayout
                 }
 	        	if ((moveDown || state == REFRESHING) && checkContentCanBePulledDown(contentView, headView)){
 	        		
-	                // ¶ÔÊµ¼Ê»¬¶¯¾àÀë×öËõĞ¡£¬Ôì³ÉÓÃÁ¦À­µÄ¸Ğ¾õ  
+	                // å¯¹å®é™…æ»‘åŠ¨è·ç¦»åšç¼©å°ï¼Œé€ æˆç”¨åŠ›æ‹‰çš„æ„Ÿè§‰  
 	                moveDeltaY += offsetY / radio;  
 	                if (moveDeltaY < 0)  
 	                    moveDeltaY = 0;  
 	                if (moveDeltaY > getMeasuredHeight())  
 	                    moveDeltaY = getMeasuredHeight();  
 		            lastEvent.set(ev.getX(), ev.getY());
-		            // ¸ù¾İÏÂÀ­¾àÀë¸Ä±ä±ÈÀı  
+		            // æ ¹æ®ä¸‹æ‹‰è·ç¦»æ”¹å˜æ¯”ä¾‹  
 		            radio = (float) (2 + Math.tan(Math.PI / 2 / getMeasuredHeight() * moveDeltaY));  
 		            requestLayout();
 	                if (state == REFRESHING)  
 	                {  
-	                    // ÕıÔÚË¢ĞÂµÄÊ±ºò´¥ÃşÒÆ¶¯  
+	                    // æ­£åœ¨åˆ·æ–°çš„æ—¶å€™è§¦æ‘¸ç§»åŠ¨  
 	                    //isTouchInRefreshing = true;
 	                }
 	                else{
@@ -329,12 +329,12 @@ public class PullToRefreshLayout extends RelativeLayout
 	        case MotionEvent.ACTION_UP:  
 	            if (moveDeltaY > mOffsetToRefresh) 
 	            {
-	                // ÕıÔÚË¢ĞÂÊ±ÍùÏÂÀ­ÊÍ·ÅºóÏÂÀ­Í·²»Òş²Ø  
+	                // æ­£åœ¨åˆ·æ–°æ—¶å¾€ä¸‹æ‹‰é‡Šæ”¾åä¸‹æ‹‰å¤´ä¸éšè—  
 	                //isTouchInRefreshing = false;  
 		            if (state == RELEASE_TO_REFRESH)  
 		            {  
 		                changeState(REFRESHING);  
-		                // Ë¢ĞÂ²Ù×÷  
+		                // åˆ·æ–°æ“ä½œ  
 		                if (mListener != null)  
 		                    mListener.onRefresh();  
 		            }  
@@ -345,7 +345,7 @@ public class PullToRefreshLayout extends RelativeLayout
 	            	hideHeadView(0);  
 	                return true;
 	            }
-	            //ÕâÊÇÈç¹ûreturn ture£¬Ôò»áÏû·ÑMOVE_UPÊÂ¼ş£¬×Ó¿Ø¼ş½ÓÊÜ²»µ½ÊÂ¼ş
+	            //è¿™æ˜¯å¦‚æœreturn tureï¼Œåˆ™ä¼šæ¶ˆè´¹MOVE_UPäº‹ä»¶ï¼Œå­æ§ä»¶æ¥å—ä¸åˆ°äº‹ä»¶
 	        default:  
 	            break;  
         }

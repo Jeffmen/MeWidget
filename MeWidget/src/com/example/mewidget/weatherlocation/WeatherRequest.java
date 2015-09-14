@@ -25,8 +25,8 @@ import android.net.Uri;
 import android.util.Log;
 
 public class WeatherRequest {
-	//ËÑË÷³ÇÊĞhttp://sugg.us.search.yahoo.net/gossip-gl-location/?appid=weather&output=xml&command=%E5%B9%BF
-	//²éÑ¯³ÇÊĞselect * from flickr.places where lon=116.32298703399 and lat=39.983424051248 and accuracy=6
+	//æœç´¢åŸå¸‚http://sugg.us.search.yahoo.net/gossip-gl-location/?appid=weather&output=xml&command=%E5%B9%BF
+	//æŸ¥è¯¢åŸå¸‚select * from flickr.places where lon=116.32298703399 and lat=39.983424051248 and accuracy=6
 	//http://maps.google.cn/maps/api/geocode/json?latlng=41.00,29.00&sensor=true&language=zh-CN
     private final String REQUEST_URL = "http://query.yahooapis.com/v1/public/yql?format=json&q=";
 	private List<CityInfo> cityList = new ArrayList<CityInfo>();
@@ -85,7 +85,7 @@ public class WeatherRequest {
 	}
 	
 	public void request(){
-		// »ñÈ¡½âÎöÊı¾İ
+		// ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		String strUrl = "";
 		if(cityList.size()>0){
 			String sql = geCityNameSql();
@@ -102,7 +102,7 @@ public class WeatherRequest {
 //		            conn.setConnectTimeout(10000);  
 //		            conn.setRequestMethod("GET");  
 //		            //conn.setRequestProperty("User-Agent","Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; .NET4.0E)");  
-//		            //ÉèÖÃ¸ÃÁ¬½ÓÊÇ·ñ¿ÉÊäÈë  
+//		            //ï¿½ï¿½ï¿½Ã¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
 //		            //conn.setDoInput(true);  
 //		            int code=conn.getResponseCode();  
 //		            System.out.println(code+"****");  

@@ -23,9 +23,9 @@ public class WeatherService extends Service {
 	private MyBinder mBinder = new MyBinder();
 	
 	public enum Type{
-		ALL,//Ô­ÓĞ³ÇÊĞ
-		LOCATION,//¶¨Î»³ÇÊĞ
-		OTHER//³ıÁË¶¨Î»³ÇÊĞ
+		ALL,//åŸæœ‰åŸå¸‚
+		LOCATION,//å®šä½åŸå¸‚
+		OTHER//é™¤äº†å®šä½åŸå¸‚
 	}
 	
 	@Override
@@ -63,7 +63,7 @@ public class WeatherService extends Service {
 		  
         public void weatherInfoDownLoad(Type type) {  
             Log.d("TAG", "weatherInfoDownLoad() executed");  
-            // Ö´ĞĞ¾ßÌåµÄÏÂÔØÈÎÎñ  
+            // æ‰§è¡Œå…·ä½“çš„ä¸‹è½½ä»»åŠ¡  
             AsyncTask<Type, Void, Integer> mTask = new WeatherInfoDownloadTask();
     		if (mTask.getStatus() == AsyncTask.Status.PENDING) {
     			mTask.execute(type);
@@ -71,15 +71,15 @@ public class WeatherService extends Service {
         }  
         
         public void latLngToCity(String latitude, String longitude) {  
-            Log.d("TAG", "latLngToCity() executed");  
-            // Ö´ĞĞ¾ßÌåµÄÏÂÔØÈÎÎñ  
+            Log.d("TAG", "latLngToCity() executed"); 
+            // æ‰§è¡Œå…·ä½“çš„ä¸‹è½½ä»»åŠ¡  
             AsyncTask<String, Void, Integer> mTask = new LatLngToCityTask();
     		if (mTask.getStatus() == AsyncTask.Status.PENDING) {
     			mTask.execute(latitude, longitude);
     		}
         } 
     } 
-	//ÏÂÔØÌìÆøÊı¾İ
+	//ä¸‹è½½å¤©æ°”æ•°æ®
 	private class WeatherInfoDownloadTask extends AsyncTask<Type, Void, Integer> {
 		@Override
 		protected Integer doInBackground(Type... params) {
@@ -110,8 +110,8 @@ public class WeatherService extends Service {
 			}
 		}
 	}
-	
-	//Í¨¹ı¾­Î³¶È²é²éÕÒ³ÇÊĞ
+
+	//é€šè¿‡ç»çº¬åº¦æŸ¥æŸ¥æ‰¾åŸå¸‚
 	private class LatLngToCityTask extends AsyncTask<String, Void, Integer> {
 		
 		@Override

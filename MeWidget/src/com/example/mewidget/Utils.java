@@ -111,6 +111,36 @@ public class Utils {
 
         return bitmap;
     }
+    
+    public static int getWeatherIconDrawableID(String str){
+    	if(str==null || str.isEmpty()){
+			return 0;
+    	}
+		if(str.contains("Clear")||str.contains("Sunny")){
+			return R.drawable.sunny_200;
+		}
+		else if(str.contains("Cloudy") || str.contains("Mostly Cloudy")){
+			return R.drawable.cloudy_200_ani_1;
+		}
+		else if(str.contains("Partly Cloudy")){
+			return R.drawable.cloud_200;
+		}
+		else if(str.contains("Rain")){
+			return R.drawable.drizzle_200;
+		}
+		else if(str.contains("Thunder")){
+			return R.drawable.thunderstorms_200;
+		}
+		else if(str.contains("Snow")){
+			return R.drawable.snow_200;
+		}
+		else if(str.contains("Haze")){
+			return R.drawable.haze_200;
+		}
+		else if(str.contains("Thundershowers")){
+			return R.drawable.slight_drizzle_200;
+		}
+    }
     public static void setImageAnimation(WeatherCardItem item, String str){
     	if(str==null || str.isEmpty()){
 			item.setWeatherIcon1(R.drawable.sunny_200);
@@ -165,6 +195,16 @@ public class Utils {
 			return R.drawable.rain_snow_bg;
 		}
 		return R.drawable.clear_bg;
+	}
+	
+	public static boolean isShowSun(int id){
+		if(id == R.drawable.sunny || id == R.drawable.mostly_cloudy 
+		|| id == R.drawable.haze || id == R.drawable.slight_drizzle){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 	
 	public static int getWeatherIconDrawableID(String str){

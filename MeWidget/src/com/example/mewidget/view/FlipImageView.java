@@ -25,7 +25,7 @@ public class FlipImageView extends View {
 
     private boolean isStarted;
     private boolean isAdd = true; 
-    private Paint mPaint;// ª≠± 
+    private Paint mPaint;
     private static final float BITMAP_MARGIN = 0.067F;
     private static final float SHADOW_MARGIN = 0.054F;
     private static final float SHADOW_HEIGHT = 0.19F;
@@ -49,12 +49,10 @@ public class FlipImageView extends View {
     }
     
     private void initPaint() {  
-        //  µ¿˝ªØª≠±   
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG); 
         mPaint.setStyle(Paint.Style.FILL);  
         //mPaint.setColor(Color.BLUE);
         mPaint.setColor(0xFF969696);
-        // …Ë÷√ª≠± ’⁄’÷¬Àæµ  
         mPaint.setMaskFilter(new BlurMaskFilter(6, BlurMaskFilter.Blur.NORMAL));  
         setLayerType(LAYER_TYPE_SOFTWARE, null); 
     }

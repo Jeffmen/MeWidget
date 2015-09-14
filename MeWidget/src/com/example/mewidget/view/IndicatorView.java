@@ -18,11 +18,11 @@ public class IndicatorView extends View implements OnChanger{
 	private Context mContext;
 	private static final float TOP = 1 / 2F;
 	private static final int RADIUS = 4;//dp
-	private float left, spaceX, top, radius, gap;// 网格区域左上右下两点坐标
+	private float left, spaceX, top, radius, gap;// 缃戞牸鍖哄煙宸︿笂鍙充笅涓ょ偣鍧愭爣
 	private CursorAdapter mAdapter;
 	private Paint pointPaint;
 	private int position = 0;
-	private int viewWidthSize;// 控件尺寸
+	private int viewWidthSize;// 鎺т欢灏哄
 	
 	private DataSetObserver mDataObserver = new DataSetObserver() {
 
@@ -63,7 +63,7 @@ public class IndicatorView extends View implements OnChanger{
 	
 	@Override
 	protected void onSizeChanged(int width, int height, int oldw, int oldh) {		
-		// 获取控件尺寸
+		// 鑾峰彇鎺т欢灏哄
 		viewWidthSize = width;
 		top = height * TOP;
 		radius = Utils.dpToPx(mContext, RADIUS);
