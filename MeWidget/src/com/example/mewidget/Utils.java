@@ -130,7 +130,7 @@ public class Utils {
 			return R.drawable.widget_thunderstorms_88;
 		}
 		else if(str.contains("Snow")){
-			return R.drawable.widget_snow88;
+			return R.drawable.widget_snow_88;
 		}
 		else if(str.contains("Haze")){
 			return R.drawable.widget_haze_88;
