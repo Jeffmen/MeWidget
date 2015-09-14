@@ -456,9 +456,9 @@ public class SpreadListView extends AdapterView<CursorAdapter> {
 					}
 				}
 			}
-	        if(isXMove){ //×ó»¬ÒÆ¶¯
+	        if(isXMove){ //ï¿½ï¿½ï¿½Æ¶ï¿½
 	            ViewHelper.setTranslationX(touchView, -mMoveX);  
-	            // Í¸Ã÷¶È½¥±ä  
+	            // Í¸ï¿½ï¿½ï¿½È½ï¿½ï¿½ï¿½  
 	            ViewHelper.setAlpha(touchView, Math.max(0f, Math.min(1f, 1f - 1.2f * Math.abs(mMoveX)/ touchView.getWidth()))); 
 	        }
 			requestLayout();
@@ -584,7 +584,7 @@ public class SpreadListView extends AdapterView<CursorAdapter> {
             public void onAnimationEnd(Animator animation) {  
         		animationIsDoing = false;
             	if(!openViewExist){
-            		//µ«Õû¸öÒ³ÃæÃ»ÓĞ´ò¿ªµÄÒ³ÃæÊ±£¬µã»÷µÄÒ³Ãæ´ò¿ªºó£¬Ê¹mMaxYÃ»ÓĞÔö³¤originalHeight*2, ËùÒÔ¼õĞ¡mNextYµÄÖµ
+            		//ä½†æ•´ä¸ªé¡µé¢æ²¡æœ‰æ‰“å¼€çš„é¡µé¢æ—¶ï¼Œç‚¹å‡»çš„é¡µé¢æ‰“å¼€åï¼Œä½¿mMaxYæ²¡æœ‰å¢é•¿originalHeight*2, æ‰€ä»¥å‡å°mNextYçš„å€¼
             		mNextY += -originalHeight*2;
             		notMove = true;
             	}

@@ -58,7 +58,7 @@ public class HorizontalScrollViewAdapter extends CursorAdapter{
 		viewHolder.forecastView = (WeatherLineView)item.findViewById(R.id.forecst_info);
 		item.setTag(viewHolder);
 		
-        return item;//返回的view传给bindView。
+        return item;
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class HorizontalScrollViewAdapter extends CursorAdapter{
 		viewHolder.isLocation.setVisibility(isLocation == 1 ? View.VISIBLE : View.INVISIBLE);
 
 		viewHolder.weatherTxt.setText(cursor.getString(cursor.getColumnIndex(Weather.Columns.WEATHER_TEXT1)));
-		viewHolder.currentTemp.setText(cursor.getString(cursor.getColumnIndex(Weather.Columns.CURRENT_TEMP))+"°");
+		viewHolder.currentTemp.setText(cursor.getString(cursor.getColumnIndex(Weather.Columns.CURRENT_TEMP))+"掳");
 		
 		viewHolder.humidity.setText(cursor.getString(cursor.getColumnIndex(Weather.Columns.HUMIDITY))+"%");
 		viewHolder.windSpeed.setText(cursor.getString(cursor.getColumnIndex(Weather.Columns.WIND_SPEED))+" mph");
