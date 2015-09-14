@@ -158,7 +158,7 @@
 			        android:layout_height="wrap_content"
 			        android:layout_gravity="center"
 			        android:scaleType="centerInside"
-			        android:background="@drawable/widget_w_sunny">
+			        android:background="@drawable/widget_sunny_88">
 	            </ImageView>
 		    </LinearLayout>
 		</LinearLayout>

@@ -63,14 +63,16 @@ public class WidgetProvider extends AppWidgetProvider{
 		remoteViews.setTextViewText(R.id.dayText5_id, String.valueOf(date));
 		remoteViews.setInt(R.id.dayText5_id, "setTextColor", Color.argb(20,0,0,0));
 
-    	Uri uri = Uri.withAppendedPath(Weather.CONTENT_URI, "/islocation/1");
+    	Uri uri = Uri.withAppendedPath(Weather.CONTENT_URI, "islocation/1");
 		Cursor c = context.getContentResolver().query(uri, Weather.PROJECTION_WEATHER_INFO, null, null, null);
 
-        if(c == null || c.getCount() == 0){
-        	int imageId = Utils.getWeatherIconDrawableID(c.getString(c.getColumnIndex(Weather.Columns.WEATHER_TEXT1)));
+        if(c != null && c.getCount() > 0){
+        	c.moveToNext();
+        	int imageId = Utils.getWidgetWeatherIconDrawableID(c.getString(c.getColumnIndex(Weather.Columns.WEATHER_TEXT1)));
         	remoteViews.setImageViewResource(R.id.weatherIcon2, imageId);
+        	
         	if(Utils.isShowSun(imageId)){
-        		if(imageId == R.drawable.sunny_200){
+        		if(imageId == R.drawable.widget_sunny_88){
                 	remoteViews.setViewVisibility(R.id.weatherLinear1, View.VISIBLE);
         		}
         		else{

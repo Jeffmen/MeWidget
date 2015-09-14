@@ -110,35 +110,35 @@ public class Utils {
         return bitmap;
     }
     
-    public static int getWeatherIconDrawable200ID(String str){
+    public static int getWidgetWeatherIconDrawableID(String str){
     	if(str==null || str.isEmpty()){
 			return 0;
     	}
 		if(str.contains("Clear")||str.contains("Sunny")){
-			return R.drawable.sunny_200;
+			return R.drawable.widget_sunny_88;
 		}
 		else if(str.contains("Partly Cloudy")){
-			return R.drawable.cloud_200;
+			return R.drawable.widget_cloud_88;
 		}
 		else if(str.contains("Cloudy") || str.contains("Mostly Cloudy")){
-			return R.drawable.cloudy_200_ani_1;
+			return R.drawable.widget_cloudy_88;
 		}
-//		else if(str.contains("Rain")){
-//			return R.drawable.drizzle_200;
-//		}
-//		else if(str.contains("Thunder")){
-//			return R.drawable.thunderstorms_200;
-//		}
-//		else if(str.contains("Snow")){
-//			return R.drawable.snow_200;
-//		}
+		else if(str.contains("Rain")){
+			return R.drawable.widget_drizzle_88;
+		}
+		else if(str.contains("Thunder")){
+			return R.drawable.widget_thunderstorms_88;
+		}
+		else if(str.contains("Snow")){
+			return R.drawable.widget_snow_88;
+		}
 		else if(str.contains("Haze")){
-			return R.drawable.haze_200;
+			return R.drawable.widget_haze_88;
 		}
 		else if(str.contains("Thundershowers")){
-			return R.drawable.slight_drizzle_200;
+			return R.drawable.widget_slight_drizzle_88;
 		}
-		return R.drawable.sunny_200;
+		return R.drawable.widget_sunny_88;
     }
     
     public static void setImageAnimation(WeatherCardItem item, String str){
@@ -198,8 +198,8 @@ public class Utils {
 	}
 	
 	public static boolean isShowSun(int id){
-		if(id == R.drawable.sunny || id == R.drawable.mostly_cloudy 
-		|| id == R.drawable.haze || id == R.drawable.slight_drizzle){
+		if(id == R.drawable.widget_sunny_88 || id == R.drawable.widget_cloud_88 
+		|| id == R.drawable.widget_haze_88 || id == R.drawable.widget_slight_drizzle_88){
 			return true;
 		}
 		else{
