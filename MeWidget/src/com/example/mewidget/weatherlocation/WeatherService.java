@@ -23,9 +23,9 @@ public class WeatherService extends Service {
 	private MyBinder mBinder = new MyBinder();
 	
 	public enum Type{
-		ALL,//所有城市
-		LOCATION,//定位城市
-		OTHER//除了定位城市
+		ALL,
+		LOCATION,
+		OTHER
 	}
 	
 	@Override
@@ -63,7 +63,7 @@ public class WeatherService extends Service {
 		  
         public void weatherInfoDownLoad(Type type) {  
             Log.d("TAG", "weatherInfoDownLoad() executed");  
-            // 执行具体的下载任务  
+            // 鎵ц鍏蜂綋鐨勪笅杞戒换鍔�  
             AsyncTask<Type, Void, Integer> mTask = new WeatherInfoDownloadTask();
     		if (mTask.getStatus() == AsyncTask.Status.PENDING) {
     			mTask.execute(type);
@@ -72,14 +72,14 @@ public class WeatherService extends Service {
         
         public void latLngToCity(String latitude, String longitude) {  
             Log.d("TAG", "latLngToCity() executed"); 
-            // 执行具体的下载任务  
+            // 鎵ц鍏蜂綋鐨勪笅杞戒换鍔�  
             AsyncTask<String, Void, Integer> mTask = new LatLngToCityTask();
     		if (mTask.getStatus() == AsyncTask.Status.PENDING) {
     			mTask.execute(latitude, longitude);
     		}
         } 
     } 
-	//下载天气数据
+	//涓嬭浇澶╂皵鏁版嵁
 	private class WeatherInfoDownloadTask extends AsyncTask<Type, Void, Integer> {
 		@Override
 		protected Integer doInBackground(Type... params) {
@@ -111,7 +111,7 @@ public class WeatherService extends Service {
 		}
 	}
 
-	//通过经纬度查查找城市
+	//閫氳繃缁忕含搴︽煡鏌ユ壘鍩庡競
 	private class LatLngToCityTask extends AsyncTask<String, Void, Integer> {
 		
 		@Override

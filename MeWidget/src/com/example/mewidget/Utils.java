@@ -123,7 +123,7 @@ public class Utils {
 		else if(str.contains("Cloudy") || str.contains("Mostly Cloudy")){
 			return R.drawable.widget_cloudy_88;
 		}
-		else if(str.contains("Rain")){
+		else if(str.contains("Rain") || str.contains("Showers")){
 			return R.drawable.widget_drizzle_88;
 		}
 		else if(str.contains("Thunder")){
@@ -156,7 +156,7 @@ public class Utils {
 		else if(str.contains("Cloudy") || str.contains("Mostly Cloudy")){
 			item.setWeatherIcon2ani(R.anim.cloudy_animation);
 		}
-		else if(str.contains("Rain")){
+		else if(str.contains("Rain") || str.contains("Showers")){
 			item.setWeatherIcon2ani(R.anim.drizzle_animation);
 		}
 		else if(str.contains("Thunder")){
@@ -176,22 +176,25 @@ public class Utils {
     }
     
 	public static int getWeatherBackgroundDrawableID(String str){
-		if(str!=null && !str.isEmpty() && str.contains("Clear")){
+    	if(str==null || str.isEmpty()){
+			return R.drawable.clear_bg;
+    	}
+    	else if(str.contains("Clear")){
 			return R.drawable.clear_bg;
 		}
-		if(str!=null && !str.isEmpty() && str.contains("Cloudy")){
+    	else if(str.contains("Cloudy")){
 			return R.drawable.cloudy_bg;
 		}
-		if(str!=null && !str.isEmpty() && str.contains("Rain")){
+    	else if(str.contains("Rain")){
 			return R.drawable.rain_bg;
 		}
-		if(str!=null && !str.isEmpty() && str.contains("Thunder")){
+    	else if(str.contains("Thunder")){
 			return R.drawable.thunder_bg;
 		}
-		if(str!=null && !str.isEmpty() && str.contains("Snow")){
+    	else if(str.contains("Snow")){
 			return R.drawable.snow_bg;
 		}
-		if(str!=null && !str.isEmpty() && str.contains("Rain_snow")){
+    	else if(str.contains("Rain_snow")){
 			return R.drawable.rain_snow_bg;
 		}
 		return R.drawable.clear_bg;
@@ -208,28 +211,31 @@ public class Utils {
 	}
 	
 	public static int getWeatherIconDrawableID(String str){
-		if(str!=null && !str.isEmpty() && (str.contains("Clear")||str.contains("Sunny"))){
+    	if(str==null || str.isEmpty()){
+    		return R.drawable.sunny;
+    	}
+		if(str.contains("Clear")||str.contains("Sunny")){
 			return R.drawable.sunny;
 		}
-		if(str!=null && !str.isEmpty() && (str.contains("Cloudy") || str.contains("Mostly Cloudy"))){
-			return R.drawable.cloudy;
-		}
-		if(str!=null && !str.isEmpty() && str.contains("Partly Cloudy")){
+		else if(str.contains("Partly Cloudy")){
 			return R.drawable.mostly_cloudy;
 		}
-		if(str!=null && !str.isEmpty() && str.contains("Rain")){
+		else if(str.contains("Cloudy") || str.contains("Mostly Cloudy")){
+			return R.drawable.cloudy;
+		}
+		else if(str.contains("Rain") || str.contains("Showers")){
 			return R.drawable.drizzle;
 		}
-		if(str!=null && !str.isEmpty() && str.contains("Thunder")){
+		else if(str.contains("Thunder")){
 			return R.drawable.thunderstorms;
 		}
-		if(str!=null && !str.isEmpty() && str.contains("Snow")){
+		else if(str.contains("Snow")){
 			return R.drawable.snow;
 		}
-		if(str!=null && !str.isEmpty() && str.contains("Haze")){
+		else if(str.contains("Haze")){
 			return R.drawable.haze;
 		}
-		if(str!=null && !str.isEmpty() && str.contains("Thundershowers")){
+		else if(str.contains("Thundershowers")){
 			return R.drawable.slight_drizzle;
 		}
 		return R.drawable.sunny;
