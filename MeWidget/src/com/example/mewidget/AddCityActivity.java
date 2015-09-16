@@ -60,7 +60,6 @@ public class AddCityActivity extends StatusActivity implements TextWatcher{
 //					//mSwipeLayout.setRefreshing(false);
 //				}
 //			}, 5000);
-            // 下拉刷新操作  
             new Handler()  
             {  
                 @Override  
