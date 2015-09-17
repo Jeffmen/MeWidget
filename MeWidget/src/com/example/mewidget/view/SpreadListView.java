@@ -190,15 +190,22 @@ public class SpreadListView extends AdapterView<CursorAdapter> {
 			params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		}
 		addViewInLayout(child, viewPos, params, true);
-		
-        if(position == openPosition){
+
+        if(mAdapter.getCount() > 0 && position == openPosition){
 			openView = child;
 			child.measure(MeasureSpec.makeMeasureSpec(getWidth(), MeasureSpec.EXACTLY),
 					MeasureSpec.makeMeasureSpec(((int)getHeight()/6)*3, MeasureSpec.EXACTLY));
 		}
 		else{
-			child.measure(MeasureSpec.makeMeasureSpec(getWidth(), MeasureSpec.EXACTLY),
-					MeasureSpec.makeMeasureSpec((int)getHeight()/6, MeasureSpec.EXACTLY));
+			if(child == lastView && position < 3){
+				//when screen is not full, then spread the last view height
+				child.measure(MeasureSpec.makeMeasureSpec(getWidth(), MeasureSpec.EXACTLY),
+						MeasureSpec.makeMeasureSpec((int)getHeight()/(position+1), MeasureSpec.EXACTLY));
+			}
+			else{
+				child.measure(MeasureSpec.makeMeasureSpec(getWidth(), MeasureSpec.EXACTLY),
+						MeasureSpec.makeMeasureSpec((int)getHeight()/6, MeasureSpec.EXACTLY));
+			}
 		}
 	}
  
