@@ -240,7 +240,7 @@ public class WeatherCardItemLayout extends ViewGroup {
     	openPosition = position;
         this.requestLayout();
         aniItem = (WeatherCardItem)getChildAt(openPosition);
-        aniItem.startWeatherInfoAni();
+        aniItem.startWeatherInfoAni(0);
 	}
 	
 	private void moveToMax(int position){

@@ -1,9 +1,5 @@
 package com.example.mewidget.weatherlocation;
 
-
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,19 +8,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.mewidget.provider.Weather;
+import com.example.mewidget.weatherlocation.RequestManager.Request;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
-public class WeatherRequest {
+public class WeatherRequest implements Request {
 	//搜索城市http://sugg.us.search.yahoo.net/gossip-gl-location/?appid=weather&output=xml&command=%E5%B9%BF
 	//查询城市select * from flickr.places where lon=116.32298703399 and lat=39.983424051248 and accuracy=6
 	//http://maps.google.cn/maps/api/geocode/json?latlng=41.00,29.00&sensor=true&language=zh-CN
@@ -84,8 +79,7 @@ public class WeatherRequest {
 		return res;
 	}
 	
-	public void request(){
-		// ��ȡ��������
+	public JsonObjectRequest getRequest(){
 		String strUrl = "";
 		if(cityList.size()>0){
 			String sql = geCityNameSql();
@@ -95,21 +89,6 @@ public class WeatherRequest {
             if(!sql.isEmpty()){
 				try {
 					strUrl = REQUEST_URL + URLEncoder.encode(sql, "UTF-8");
-//					URL url = new URL(strUrl);
-//					parseJson(url.openStream());
-
-//		            HttpURLConnection conn=(HttpURLConnection) url.openConnection();  
-//		            conn.setConnectTimeout(10000);  
-//		            conn.setRequestMethod("GET");  
-//		            //conn.setRequestProperty("User-Agent","Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; .NET4.0E)");  
-//		            //���ø������Ƿ������  
-//		            //conn.setDoInput(true);  
-//		            int code=conn.getResponseCode();  
-//		            System.out.println(code+"****");  
-//		            if(code==200){  
-//		                parseJson(conn.getInputStream());  
-//		            } 
-					RequestQueue mQueue = Volley.newRequestQueue(mContext);
 					JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(strUrl, null,  
 					        new Response.Listener<JSONObject>() {  
 					            @Override  
@@ -121,21 +100,20 @@ public class WeatherRequest {
 								@Override
 								public void onErrorResponse(VolleyError error) {
 									Log.i("zy", "startParseXml:thought an Exception");
-									
 								}  
 					        });
-					mQueue.add(jsonObjectRequest);
+
+					return jsonObjectRequest;
 				} catch (Exception e) {
-					Log.i("zy", "startParseXml:thought an Exception");
 					e.printStackTrace();
 				}
             }
 		}
+		return null;
 	}
 	
 	private void parseJson(JSONObject input){
         //String json=new String(Utils.convertIsToByteArray(input));
-		Log.i("zy", "WeatherRequest parseJson....");
         try {
         	JSONObject  jObject =input;
         	JSONObject query = jObject.getJSONObject("query");

@@ -13,19 +13,17 @@ import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.GestureDetector.OnGestureListener;
-import android.view.View.MeasureSpec;
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.Scroller;
 
 public class SpreadListView extends AdapterView<CursorAdapter> {
 	private Context mContext;
-    public static int ANIMATION_DURATION = 300;
+    public static int ANIMATION_DURATION = 600;
 	protected CursorAdapter mAdapter;
 	private int mTopViewIndex = -1;
 	private int mDownViewIndex = 0;
@@ -42,7 +40,7 @@ public class SpreadListView extends AdapterView<CursorAdapter> {
 	private OnItemLongClickListener mOnItemLongClicked;
 	private OnItemClickListener mOnItemDeleteListener;
 	private boolean mDataChanged = false;
-    private int openPosition = 0;
+    private int openPosition = -1;
     private int touchPosition = 0;
     private View openView = null;
     private View touchView = null;
@@ -56,7 +54,7 @@ public class SpreadListView extends AdapterView<CursorAdapter> {
     
 	
 	public interface OnDrager {
-		public void startWeatherInfoAni();
+		public void startWeatherInfoAni(int type);
 		public void moveWeahterIconTo(float deltaY);
 		public void moveWeahterIconBy(float deltaY);
 	}
@@ -76,7 +74,7 @@ public class SpreadListView extends AdapterView<CursorAdapter> {
 		mMaxY = Integer.MAX_VALUE;
 		mScroller = new Scroller(getContext());
 		mGesture = new GestureDetector(getContext(), mOnGesture);
-	    openPosition = 0;
+	    openPosition = -1;
 	    touchPosition = 0;
 	    openView = null;
 	    moveStep = 0;
@@ -158,16 +156,22 @@ public class SpreadListView extends AdapterView<CursorAdapter> {
 
 	@Override
 	public void setAdapter(CursorAdapter adapter) {
+		if(this.animationIsDoing) return;
 		if(mAdapter != null) {
-			mAdapter.unregisterDataSetObserver(mDataObserver);
+			//mAdapter.unregisterDataSetObserver(mDataObserver);
 		}
 		mAdapter = adapter;
-		mAdapter.registerDataSetObserver(mDataObserver);
-		int oldNextY = mNextY;
-		int oldOpenPosition = openPosition;
-		reset();
-		mNextY = oldNextY;
-		openPosition = oldOpenPosition;
+		synchronized(SpreadListView.this){
+			mDataChanged = true;
+		}
+		invalidate();
+		requestLayout();
+		//mAdapter.registerDataSetObserver(mDataObserver);
+//		int oldNextY = mNextY;
+//		int oldOpenPosition = openPosition;
+//		reset();
+//		mNextY = oldNextY;
+//		openPosition = oldOpenPosition;
 	}
 	
 	private void reset(){
@@ -195,6 +199,9 @@ public class SpreadListView extends AdapterView<CursorAdapter> {
 			openView = child;
 			child.measure(MeasureSpec.makeMeasureSpec(getWidth(), MeasureSpec.EXACTLY),
 					MeasureSpec.makeMeasureSpec(((int)getHeight()/6)*3, MeasureSpec.EXACTLY));
+	        if(child instanceof OnDrager){
+	        	((OnDrager)child).startWeatherInfoAni(1);
+	        }
 		}
 		else{
 			if(child == lastView && position < 3){
@@ -284,7 +291,7 @@ public class SpreadListView extends AdapterView<CursorAdapter> {
 	private void fillListDown(int bottomEdge, final int dy) {
 		View child;
 		while(bottomEdge + dy < getHeight() && mDownViewIndex <= mAdapter.getCount()) {
-			if(mDownViewIndex == mAdapter.getCount()) {
+        	if(mDownViewIndex == mAdapter.getCount()) {
 				child = lastView;
 			}
 			else{
@@ -600,7 +607,13 @@ public class SpreadListView extends AdapterView<CursorAdapter> {
             }  
         });
         animator.setDuration(ANIMATION_DURATION);
-        animator.start(); 
+        animator.start();
+        if(view instanceof OnDrager){
+        	((OnDrager)view).startWeatherInfoAni(1);
+        }
+        if(openView != null && openView instanceof OnDrager){
+        	((OnDrager)openView).startWeatherInfoAni(0);
+        }
     }
     
     private void pullItemViewBack(){
@@ -652,9 +665,7 @@ public class SpreadListView extends AdapterView<CursorAdapter> {
 						mOnItemDeleteListener.onItemClick(SpreadListView.this, touchView, touchPosition, mAdapter.getItemId(touchPosition));
 					}
 					removeViewInLayout(touchView);
-	            	//openView = nextView;
 	            	openPosition = nextPosition > openPosition ? openPosition : nextPosition;
-	            	//setAdapter(mAdapter);
 		        }  
 		    });
 		    animator.setDuration(ANIMATION_DURATION);

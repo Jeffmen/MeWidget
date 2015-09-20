@@ -8,12 +8,14 @@ import com.example.mewidget.view.WeatherCardItem;
 import com.nineoldandroids.view.ViewHelper;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
+import android.text.TextUtils;
 import android.view.View;
 
 public class Utils {
@@ -117,7 +119,7 @@ public class Utils {
 		if(str.contains("Clear")||str.contains("Sunny")){
 			return R.drawable.widget_sunny_88;
 		}
-		else if(str.contains("Partly Cloudy")){
+		else if(str.contains("Partly Cloudy") || str.contains("Clouds")){
 			return R.drawable.widget_cloud_88;
 		}
 		else if(str.contains("Cloudy") || str.contains("Mostly Cloudy")){
@@ -149,7 +151,7 @@ public class Utils {
 		if(str.contains("Clear")||str.contains("Sunny")){
 			item.setWeatherIcon1(R.drawable.sunny_200);
 		}
-		else if(str.contains("Partly Cloudy")){
+		else if(str.contains("Partly Cloudy") || str.contains("Clouds")){
 			item.setWeatherIcon1(R.drawable.sunny_200);
 			item.setWeatherIcon2(R.drawable.cloud_200);
 		}
@@ -217,7 +219,7 @@ public class Utils {
 		if(str.contains("Clear")||str.contains("Sunny")){
 			return R.drawable.sunny;
 		}
-		else if(str.contains("Partly Cloudy")){
+		else if(str.contains("Partly Cloudy") || str.contains("Clouds")){
 			return R.drawable.mostly_cloudy;
 		}
 		else if(str.contains("Cloudy") || str.contains("Mostly Cloudy")){
@@ -240,4 +242,16 @@ public class Utils {
 		}
 		return R.drawable.sunny;
 	}
+	
+    public static int pickColor(Context mContext, String identifier) {
+
+        TypedArray sColors = mContext.getResources().obtainTypedArray(R.array.weather_item_colors);
+        int sDefaultColor = mContext.getResources().getColor(R.color.weather_item_default_color);
+
+        if (TextUtils.isEmpty(identifier)) {
+            return sDefaultColor;
+        }
+        final int color = Math.abs(identifier.hashCode()) % sColors.length();
+        return sColors.getColor(color, sDefaultColor);
+    }
 }

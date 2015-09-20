@@ -7,14 +7,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.mewidget.provider.Weather;
+import com.example.mewidget.weatherlocation.RequestManager.Request;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
-public class LocationRequest {
+public class LocationRequest implements Request {
 	
 	private final String REQUEST_URL = "http://maps.google.cn/maps/api/geocode/json?latlng=%s,%s&language=EN";
 	private String latitude;
@@ -29,27 +33,37 @@ public class LocationRequest {
 		latitude = lat;
 		longitude = lon;
 	}
-	
-	public void request(){
-		// 获取解析数据
+
+	public JsonObjectRequest getRequest(){
 		if(!latitude.isEmpty() && !longitude.isEmpty()){
 			String strUrl = String.format(REQUEST_URL, latitude, longitude);
 			try {
-				URL url = new URL(strUrl);
-				
-				parseJson(url.openStream());
-				
+				JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(strUrl, null,  
+				        new Response.Listener<JSONObject>() {  
+				            @Override  
+				            public void onResponse(JSONObject response) {  
+				            	parseJson(response); 
+				            }  
+				        }, new Response.ErrorListener() {  
+
+							@Override
+							public void onErrorResponse(VolleyError error) {
+								Log.i("zy", "startParseXml:thought an Exception");
+							}  
+				        });
+
+				return jsonObjectRequest;
 			} catch (Exception e) {
-				Log.i("zy", "startParseXml:thought an Exception");
 				e.printStackTrace();
 			}
 		}
+		return null;
 	}
 
-	private void parseJson(InputStream input){
-        String json=new String(com.example.mewidget.Utils.convertIsToByteArray(input));
+	private void parseJson(JSONObject input){
+        //String json=new String(com.example.mewidget.Utils.convertIsToByteArray(input));
         try {
-        	JSONObject  jObject =new JSONObject(json);
+        	JSONObject  jObject =input;
         	if(jObject.getString("status").equals("OK")){
         		JSONArray results = jObject.getJSONArray("results");
 	    		if(results.length() > 0){
@@ -58,7 +72,6 @@ public class LocationRequest {
 	    		}
         	}
         } catch (JSONException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 	}
@@ -66,7 +79,6 @@ public class LocationRequest {
     private void saveToDatabase(JSONArray address){
         String cityName = null;
         String country = null;
-
     	JSONArray types;
 		try {
 	    	for(int j=0; j< address.length(); j++){
@@ -93,7 +105,6 @@ public class LocationRequest {
 				mContext.getContentResolver().update(uri, values,null,null);
 			}
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }

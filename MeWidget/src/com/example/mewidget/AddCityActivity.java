@@ -6,12 +6,8 @@ import com.example.mewidget.provider.CityLoader;
 import com.example.mewidget.provider.Weather;
 import com.example.mewidget.view.PullToRefreshLayout;
 import com.example.mewidget.weatherlocation.CityInfo;
-import com.example.mewidget.weatherlocation.CityLocationManager;
-import com.example.mewidget.weatherlocation.LocationRequest;
 import com.example.mewidget.weatherlocation.WeatherService;
-import com.example.mewidget.weatherlocation.WeatherService.Type;
 
-import android.app.Activity;
 import android.app.LoaderManager;
 import android.app.Service;
 import android.content.ComponentName;
@@ -30,13 +26,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class AddCityActivity extends StatusActivity implements TextWatcher{
 
@@ -49,6 +42,7 @@ public class AddCityActivity extends StatusActivity implements TextWatcher{
     private CityListAdapter adapter;
     private TextView cancelButton;
     private WeatherService.MyBinder myBinder;  
+    private String cityName;
     
     private SwipeRefreshLayout.OnRefreshListener swipeRefreshListener = new  SwipeRefreshLayout.OnRefreshListener(){
         @Override
@@ -113,16 +107,11 @@ public class AddCityActivity extends StatusActivity implements TextWatcher{
 				finish();
 			}
 		});
-        
-		Intent serviceintent = new Intent(AddCityActivity.this, WeatherService.class);
-		startService(serviceintent);
 	}
 	
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		Intent serviceintent = new Intent(AddCityActivity.this, WeatherService.class);
-		startService(serviceintent);
 	}
 	
 	private LoaderManager.LoaderCallbacks<List<CityInfo>> loadCallback = new LoaderManager.LoaderCallbacks<List<CityInfo>>(){
@@ -154,6 +143,7 @@ public class AddCityActivity extends StatusActivity implements TextWatcher{
     
 	private void InsertCityInfo(CityInfo info){
 		if(info != null){
+			cityName = info.getCityName();
             Uri uri = Uri.withAppendedPath(Weather.CONTENT_URI, "cityname/" + info.getCityName());
 	        Cursor c = getContentResolver().query(uri, Weather.PROJECTION_CITY_INFO, null, null, null);
             if(c == null || c.getCount() == 0){
@@ -183,16 +173,18 @@ public class AddCityActivity extends StatusActivity implements TextWatcher{
   
         @Override  
         public void onServiceConnected(ComponentName name, IBinder service) {  
-            myBinder = (WeatherService.MyBinder) service;  
-            myBinder.weatherInfoDownLoad(Type.ALL);
-            unbindService(connection); 
+            if(!cityName.isEmpty()){
+				Uri uri = Uri.withAppendedPath(Weather.CONTENT_URI, "cityname/" + cityName);
+	            myBinder = (WeatherService.MyBinder) service;  
+	            myBinder.weatherInfoDownLoad(uri);
+	            unbindService(connection); 
+            }
         }
     };
 
 	@Override
 	public void beforeTextChanged(CharSequence s, int start, int count,
 			int after) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -208,7 +200,6 @@ public class AddCityActivity extends StatusActivity implements TextWatcher{
 
 	@Override
 	public void afterTextChanged(Editable s) {
-		// TODO Auto-generated method stub
 		
 	}
 }

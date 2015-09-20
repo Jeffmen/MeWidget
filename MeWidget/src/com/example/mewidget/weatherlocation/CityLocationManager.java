@@ -1,11 +1,10 @@
 package com.example.mewidget.weatherlocation;
 
-import com.example.mewidget.weatherlocation.WeatherService.Type;
+import com.example.mewidget.provider.Weather;
 
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -13,6 +12,7 @@ import android.content.ServiceConnection;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -37,7 +37,6 @@ public class CityLocationManager {
 	private Handler myHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
-			// TODO Auto-generated method stub
 			super.handleMessage(msg);
 			if (CMD_TIMEOUT == msg.what) {
 				doLocationTimeout();
@@ -56,10 +55,11 @@ public class CityLocationManager {
         	myBinder = (WeatherService.MyBinder) service;   
             if(currentLocation != null){
                 myBinder.latLngToCity(String.valueOf(currentLocation.getLatitude()), String.valueOf(currentLocation.getLongitude()));  
-    			Toast.makeText(mContext, "定位成功。。。。", Toast.LENGTH_SHORT).show();
+    			Toast.makeText(mContext, "Location is successful...", Toast.LENGTH_SHORT).show();
             }
             else{
-            	myBinder.weatherInfoDownLoad(Type.LOCATION);
+    			Uri uri = Uri.withAppendedPath(Weather.CONTENT_URI, "islocation/1");
+            	myBinder.weatherInfoDownLoad(uri);
             }
 			mContext.unbindService(connection); 
         }
@@ -67,11 +67,11 @@ public class CityLocationManager {
     
 	private final BroadcastReceiver mCityLocationReceiver = new BroadcastReceiver() {
 		public void onReceive(Context context, Intent intent) {
-			Log.i("zy", "Receive city location broadcast....");
+			Log.i(TAG, "Receive city location broadcast....");
 
 			if(!checkGpsAvailable()
 					&& !checkNetworkAvailable()) {
-				Toast.makeText(mContext, "请打开定位功能。。。。", Toast.LENGTH_SHORT).show();
+				Toast.makeText(mContext, "Pleaas open location...", Toast.LENGTH_SHORT).show();
 				return;
 			}
 			startLocation();
@@ -89,13 +89,10 @@ public class CityLocationManager {
 			doUpdateLocation();
 
 			if (LocationManager.NETWORK_PROVIDER.equals(location.getProvider())) {
-				// if network location success
 				removeNetworkLocationListener();
 			} else {
-				// if gps location success
 				removeNetworkLocationListener();
 				removeGpsLocationListener();
-				// remove time out message
 				myHandler.removeMessages(CMD_TIMEOUT);
 			}
 		}
@@ -113,7 +110,6 @@ public class CityLocationManager {
 
 		@Override
 		public void onStatusChanged(String provider, int status, Bundle extras) {
-			// TODO Auto-generated method stub
 			
 		}
 	}
@@ -126,7 +122,7 @@ public class CityLocationManager {
 	private void init(){
 		locationManager =(LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
 		register();
-		Log.i("CityLocationManager", "CityLocationManager:init");
+		Log.i(TAG, "CityLocationManager:init");
 	}
 
     void register() {
@@ -150,7 +146,7 @@ public class CityLocationManager {
 		networkListner = new MyLocationListner();
 		gpsListener = new MyLocationListner();
 		if (!isLocationListenerNetworkSet && checkNetworkAvailable()) {
-			Log.i("zy", "test location___________ NETWORK_PROVIDER is Enabled.....");
+			Log.i(TAG, "test location___________ NETWORK_PROVIDER is Enabled.....");
 			locationManager.requestLocationUpdates(
 					LocationManager.NETWORK_PROVIDER, 0, 0, networkListner);
 			isLocationListenerNetworkSet = true;
@@ -177,7 +173,7 @@ public class CityLocationManager {
 		if (gpsListener != null) {
 			locationManager.removeUpdates(gpsListener);
 			isLocationListenerGpsSet = false;
-			Log.i("zy", "removeGpsLocationListener....");
+			Log.i(TAG, "removeGpsLocationListener....");
 		}
 	}
 
@@ -185,7 +181,7 @@ public class CityLocationManager {
 		if (networkListner != null) {
 			locationManager.removeUpdates(networkListner);
 			isLocationListenerNetworkSet = false;
-			Log.i("zy", "removeNetworkLocationListener....");
+			Log.i(TAG, "removeNetworkLocationListener....");
 		}
 	}
 	

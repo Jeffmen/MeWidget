@@ -9,8 +9,6 @@ import com.example.mewidget.provider.Weather;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.database.Cursor;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -40,7 +38,7 @@ public class WeatherCardItemAdapter extends CursorAdapter{
 		item.setCityName(cursor.getString(cursor.getColumnIndex(Weather.Columns.CITY_NAME)));
 		int isLocation = cursor.getInt(cursor.getColumnIndex(Weather.Columns.IS_LOCATION));
 		item.setLocationVisable(isLocation == 1 ? View.VISIBLE : View.INVISIBLE);
-		item.setTemperature(cursor.getString(cursor.getColumnIndex(Weather.Columns.CURRENT_TEMP))+"°C");
+		item.setTemperature(cursor.getString(cursor.getColumnIndex(Weather.Columns.CURRENT_TEMP))+"°");
 		item.setWeather(cursor.getString(cursor.getColumnIndex(Weather.Columns.WEATHER_TEXT1)));
 		item.setHumidity(cursor.getString(cursor.getColumnIndex(Weather.Columns.HUMIDITY))+"%");
 		item.setWindSpeed(cursor.getString(cursor.getColumnIndex(Weather.Columns.WIND_SPEED))+" mph");
@@ -54,14 +52,6 @@ public class WeatherCardItemAdapter extends CursorAdapter{
 		view.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 		view.setBackgroundColor(sColors.getColor(position % sColors.length(), sDefaultColor));
 	}
-	
-    private int pickColor(final String identifier) {
-        if (TextUtils.isEmpty(identifier)) {
-            return sDefaultColor;
-        }
-        final int color = Math.abs(identifier.hashCode()) % sColors.length();
-        return sColors.getColor(color, sDefaultColor);
-    }
     
 	final static class ViewHolder {
 		TextView tvLetter;

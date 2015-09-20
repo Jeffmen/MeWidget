@@ -19,7 +19,6 @@ public class CitySearchRequest {
 	private final String REQUEST_URL = "http://sugg.us.search.yahoo.net/gossip-gl-location/?appid=weather&output=xml&command=%s";
 	private Context mContext;
 	private String searchStr;
-	private List<CityInfo> cityInfo = new ArrayList<CityInfo>();
 	
 	public CitySearchRequest(Context context) {
 		mContext = context;

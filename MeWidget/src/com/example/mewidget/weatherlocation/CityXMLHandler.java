@@ -17,13 +17,11 @@ public class CityXMLHandler extends DefaultHandler {
 
 	@Override
 	public void startDocument() throws SAXException {
-		// TODO Auto-generated method stub
 		super.startDocument();
 	}
 
 	@Override
 	public void endDocument() throws SAXException {
-		// TODO Auto-generated method stub
 		super.endDocument();
 	}
 
@@ -98,9 +96,6 @@ public class CityXMLHandler extends DefaultHandler {
 	public void endElement(String uri, String localName, String qName)
 			throws SAXException {
 		super.endElement(uri, localName, qName);
-		if (currentElement) {
-			String currentValue = currentValueBuffer.toString();
-		}
 		currentElement = false;
 	}
 

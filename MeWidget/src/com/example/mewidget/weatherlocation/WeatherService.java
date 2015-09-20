@@ -9,48 +9,35 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
-import android.util.Log;
 
 public class WeatherService extends Service {
     
 	private CityLocationManager mCityLocationManager;	
 	private WeatherRequest mWeatherRequest;
 	private LocationRequest mLocationRequest;
+	private RequestManager requestManager;
 	public static final String CITY_ID = "city_id";
 	public static final String CITY_NAME = "city_name";
 	public static final String CITY_LATITUDE = "city_latitude";
 	public static final String CITY_LONGITUDE = "city_longitude";
 	private MyBinder mBinder = new MyBinder();
 	
-	public enum Type{
-		ALL,
-		LOCATION,
-		OTHER
-	}
-	
 	@Override
 	public void onCreate() {
-		// TODO Auto-generated method stub
 		super.onCreate();
 		mWeatherRequest = new WeatherRequest(this);
 		mLocationRequest = new LocationRequest(this);
 		mCityLocationManager = new CityLocationManager(this);
-		Log.i("WeatherService", "WeatherService:onCreate");
+		requestManager = new RequestManager(this);
 	}
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		/*String id = intent.getStringExtra(CITY_ID);
-		String name = intent.getStringExtra(CITY_NAME);
-		double weatherLatitude = intent.getDoubleExtra(CITY_LATITUDE, -1);
-		double weatherLongitude = intent.getDoubleExtra(CITY_LONGITUDE, -1);*/
-		
 		return super.onStartCommand(intent, flags, startId);
 	}
 	
 	@Override
 	public IBinder onBind(Intent intent) {
-		// TODO Auto-generated method stub
 		return mBinder;
 	}
 	
@@ -61,45 +48,36 @@ public class WeatherService extends Service {
 	
 	public class MyBinder extends Binder {  
 		  
-        public void weatherInfoDownLoad(Type type) {  
-            Log.d("TAG", "weatherInfoDownLoad() executed");  
-            // 鎵ц鍏蜂綋鐨勪笅杞戒换鍔�  
-            AsyncTask<Type, Void, Integer> mTask = new WeatherInfoDownloadTask();
+        public void weatherInfoDownLoad(Uri uri) {  
+            // Download weather information 
+            AsyncTask<Uri, Void, Integer> mTask = new WeatherInfoDownloadTask();
     		if (mTask.getStatus() == AsyncTask.Status.PENDING) {
-    			mTask.execute(type);
+    			mTask.execute(uri);
     		}
         }  
         
-        public void latLngToCity(String latitude, String longitude) {  
-            Log.d("TAG", "latLngToCity() executed"); 
-            // 鎵ц鍏蜂綋鐨勪笅杞戒换鍔�  
+        public void latLngToCity(String latitude, String longitude) {
+            // Download location information 
             AsyncTask<String, Void, Integer> mTask = new LatLngToCityTask();
     		if (mTask.getStatus() == AsyncTask.Status.PENDING) {
     			mTask.execute(latitude, longitude);
     		}
         } 
     } 
-	//涓嬭浇澶╂皵鏁版嵁
-	private class WeatherInfoDownloadTask extends AsyncTask<Type, Void, Integer> {
+
+	private class WeatherInfoDownloadTask extends AsyncTask<Uri, Void, Integer> {
 		@Override
-		protected Integer doInBackground(Type... params) {
+		protected Integer doInBackground(Uri... params) {
 		    String selection = null;
 		    mWeatherRequest.clearCityInfo();
-		    Uri uri;
-		    uri = Weather.CONTENT_URI;
-		    if(params[0] == Type.LOCATION){
-		    	uri = Uri.withAppendedPath(Weather.CONTENT_URI, "islocation/1");
-		    }
-		    else if(params[0] == Type.OTHER){
-		    	uri = Uri.withAppendedPath(Weather.CONTENT_URI, "islocation/0");
-		    }
+		    Uri uri  = params[0];
 			Cursor cursor = getContentResolver().query(uri, Weather.PROJECTION_CITY_INFO, selection, null, null);
 		    while(cursor.moveToNext()){
 		    	CityInfo info = new CityInfo();
 		    	info.setCityName(cursor.getString(cursor.getColumnIndex(Weather.Columns.CITY_NAME)));
 		    	mWeatherRequest.addCityInfo(info);
 		    }
-            mWeatherRequest.request();
+            requestManager.addRequest(mWeatherRequest.getRequest());
 			return 1;
 		}
 
@@ -111,13 +89,12 @@ public class WeatherService extends Service {
 		}
 	}
 
-	//閫氳繃缁忕含搴︽煡鏌ユ壘鍩庡競
 	private class LatLngToCityTask extends AsyncTask<String, Void, Integer> {
 		
 		@Override
 		protected Integer doInBackground(String... params) {
 			mLocationRequest.setLatLon(params[0], params[1]);
-			mLocationRequest.request();
+            requestManager.addRequest(mLocationRequest.getRequest());
 			return 1;
 		}
 
@@ -126,7 +103,8 @@ public class WeatherService extends Service {
 			if (isCancelled()) {
 				return;
 			}
-			mBinder.weatherInfoDownLoad(Type.ALL);
+			Uri uri = Uri.withAppendedPath(Weather.CONTENT_URI, "islocation/1");
+			mBinder.weatherInfoDownLoad(uri);
 		}
 	}
 }

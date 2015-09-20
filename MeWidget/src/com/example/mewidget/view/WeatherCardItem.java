@@ -6,6 +6,7 @@ import com.nineoldandroids.view.ViewHelper;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -20,6 +21,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class WeatherCardItem extends LinearLayout implements OnDrager {
+	private static float SCALE_NORMAL = 1.0f;
+	private static float SCALE_BIG = 1.3f;
 	private Context mContext;
 	private LinearLayout weatherInfoLayout,weatherLinear1,weatherLinear2;
 	private TextView txtCityName;
@@ -93,18 +96,43 @@ public class WeatherCardItem extends LinearLayout implements OnDrager {
 		AnimationDrawable anim = (AnimationDrawable) this.weahterIcon2.getBackground();
 		anim.start();
 	}
-	public void startWeatherInfoAni(){
+	public void startWeatherInfoAni(int type){
 		if(weatherInfoLayout != null){
-			this.weatherInfoLayout.setVisibility(View.VISIBLE);
-			ObjectAnimator oa=ObjectAnimator.ofFloat(weatherInfoLayout, "y", weatherInfoLayout.getTop()*3, weatherInfoLayout.getTop());
-			oa.setDuration(300);
-			oa.setInterpolator(new OvershootInterpolator());
-			oa.addListener(new AnimatorListenerAdapter(){
-			    public void onAnimationEnd(Animator animation){
-			        Log.i("Animation","end");
-			    }
-			});
-			oa.start();
+			//this.weatherInfoLayout.setVisibility(View.VISIBLE);
+			AnimatorSet bouncer = new AnimatorSet();
+			if(type == 0){
+				ObjectAnimator anim1=ObjectAnimator.ofFloat(weatherInfoLayout, "alpha", 0.0f);
+	            ObjectAnimator anim2=ObjectAnimator.ofFloat(txtCityName, "scaleX", 1.0f);
+	            ObjectAnimator anim4=ObjectAnimator.ofFloat(txtCityName, "scaleY", 1.0f);
+	            ObjectAnimator anim3=ObjectAnimator.ofFloat(txtTemperature, "scaleX", 1.0f);
+	            ObjectAnimator anim5=ObjectAnimator.ofFloat(txtTemperature, "scaleY", 1.0f);
+	            ObjectAnimator anim6=ObjectAnimator.ofFloat(txtCityName, "alpha", 0.7f);
+	            ObjectAnimator anim7=ObjectAnimator.ofFloat(txtTemperature, "alpha", 0.7f);
+	            bouncer.play(anim1).with(anim2);
+	            bouncer.play(anim1).with(anim3);
+	            bouncer.play(anim1).with(anim4);
+	            bouncer.play(anim1).with(anim5);
+	            bouncer.play(anim1).with(anim6);
+	            bouncer.play(anim1).with(anim7);
+			}
+			else if(type == 1){
+				ObjectAnimator anim1=ObjectAnimator.ofFloat(weatherInfoLayout, "alpha", 1.0f);
+	            ObjectAnimator anim2=ObjectAnimator.ofFloat(txtCityName, "scaleX", 1.5f);
+	            ObjectAnimator anim4=ObjectAnimator.ofFloat(txtCityName, "scaleY", 1.5f);
+	            ObjectAnimator anim3=ObjectAnimator.ofFloat(txtTemperature, "scaleX", 2.3f);
+	            ObjectAnimator anim5=ObjectAnimator.ofFloat(txtTemperature, "scaleY", 2.3f);
+	            ObjectAnimator anim6=ObjectAnimator.ofFloat(txtCityName, "alpha", 1.0f);
+	            ObjectAnimator anim7=ObjectAnimator.ofFloat(txtTemperature, "alpha", 1.0f);
+	            bouncer.play(anim1).with(anim2);
+	            bouncer.play(anim1).with(anim3);
+	            bouncer.play(anim1).with(anim4);
+	            bouncer.play(anim1).with(anim5);
+	            bouncer.play(anim1).with(anim6);
+	            bouncer.play(anim1).with(anim7);
+	            bouncer.setInterpolator(new OvershootInterpolator());
+			}
+            bouncer.setDuration(SpreadListView.ANIMATION_DURATION);
+            bouncer.start();
 		}
 	}
 	

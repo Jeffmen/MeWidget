@@ -227,11 +227,11 @@ public class WeatherLineView extends View {
 				
                 if(i == selectPosition){
                 	mTextPaint.setTextSize(textSignSzie/1.5F);
-                	mTextPaint.setColor(Color.GREEN);
+                	//mTextPaint.setColor(Color.GREEN);
                 }
                 else{
                 	mTextPaint.setTextSize(textSignSzie/2F);
-                	mTextPaint.setColor(Color.WHITE);
+                	//mTextPaint.setColor(Color.WHITE);
                 }
             	canvas.drawCircle(x, y, thickLineWidth*5/4, pointPaint);
     			textWidth = mTextPaint.measureText(pointFs.get(i).getDate());
@@ -269,11 +269,11 @@ public class WeatherLineView extends View {
 
                 if(i == selectPosition){
                 	mTextPaint.setTextSize(textSignSzie/1.5F);
-                	mTextPaint.setColor(Color.GREEN);
+                	//mTextPaint.setColor(Color.GREEN);
                 }
                 else{
                 	mTextPaint.setTextSize(textSignSzie/2F);
-                	mTextPaint.setColor(Color.WHITE);
+                	//mTextPaint.setColor(Color.WHITE);
                 }
 				canvas.drawCircle(x, y, thickLineWidth*5/4, pointPaint);
     			textWidth = mTextPaint.measureText(pointFs.get(i).getDate());
