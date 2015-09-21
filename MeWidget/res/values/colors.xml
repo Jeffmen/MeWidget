@@ -30,6 +30,7 @@
     <color name="weatheritem_lastview_color">#758a99</color>
     <color name="temperature_line_orange">#FF4500</color>
     <color name="temperature_line_blue">#87CEFA</color>
-    <color name="area_start_color">#3f0000ff</color>
+    <color name="area_start_color">#3f758a99</color>
     <color name="area_end_color">#00ffffff</color>
+    <color name="date_bg_color">#FFCC01</color>
 </resources>

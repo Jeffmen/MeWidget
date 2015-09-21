@@ -57,21 +57,18 @@ public class WeatherLineView extends View {
     private float phase, selectCricle_x;
     private int xDivisor, yDivisor;
 	private GestureDetector mGesture;
-	private int areaStartColor, areaEndColor;
+	private int areaStartColor, areaEndColor, dateBgColor;
 
 	public WeatherLineView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 
-		// 实例化文本画笔并设置参数
 		mTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG | Paint.LINEAR_TEXT_FLAG);
 		mTextPaint.setColor(Color.WHITE);
 
-		// 实例化线条画笔并设置参数
 		linePaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
 		linePaint.setStyle(Paint.Style.STROKE);
 		linePaint.setColor(Color.WHITE);
 
-		// 实例化点画笔并设置参数
 		pointPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
 		pointPaint.setStyle(Paint.Style.FILL);
 		pointPaint.setColor(Color.WHITE);
@@ -80,6 +77,7 @@ public class WeatherLineView extends View {
 
 		areaStartColor = context.getResources().getColor(R.color.area_start_color);
 		areaEndColor = context.getResources().getColor(R.color.area_end_color);
+		dateBgColor = context.getResources().getColor(R.color.date_bg_color);
 		
 		mPath = new Path();
 		mAreaPath = new Path();
@@ -87,9 +85,7 @@ public class WeatherLineView extends View {
 		selectPosition = 0;
 		selectCricle_x = 0;
 		mGesture = new GestureDetector(getContext(), mOnGesture);
-		pointFs = new ArrayList<ForecastWeatherInfo>(); 
-		
-		//initData();
+		pointFs = new ArrayList<ForecastWeatherInfo>();
 	}
 	
 	public synchronized void setData(List<ForecastWeatherInfo> pointFs, String signX, String signY) {
@@ -103,71 +99,50 @@ public class WeatherLineView extends View {
 		invalidate();
 	}
 	
-	private void initData() {
-		pointFs.add(new ForecastWeatherInfo(25,20,"Wed."));  
-		pointFs.add(new ForecastWeatherInfo(28,21,"Thur.")); 
-		pointFs.add(new ForecastWeatherInfo(33,27,"Fri."));
-		pointFs.add(new ForecastWeatherInfo(35,29,"Sat.")); 
-		pointFs.add(new ForecastWeatherInfo(29,26,"Sun.")); 
-	}
-
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		// 在我们没学习测量控件之前强制宽高一致
-//		super.onMeasure(widthMeasureSpec, widthMeasureSpec);
-//        int specMode = MeasureSpec.getMode(widthMeasureSpec);
         int specSize = MeasureSpec.getSize(widthMeasureSpec);
         setMeasuredDimension(specSize, specSize*9/10);
 	}
 
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-		// 获取控件尺寸
 		viewSize_x = w;
 		viewSize_y = h;
 
-		// 计算纵轴标识文本坐标
 		textY_X = viewSize_x * TIME_X;
 		textY_Y = viewSize_y * TIME_Y;
 
-		// 计算横轴标识文本坐标
 		textX_X = viewSize_x * MONEY_X;
 		textX_Y = viewSize_y * MONEY_Y;
 
-		// 计算xy轴标识文本大小
 		textSignSzie = viewSize_x * TEXT_SIGN;
 
-		// 计算网格左上右下两点坐标
 		left = viewSize_x * LEFT;
 		top = viewSize_y * TOP;
 		right = viewSize_x * RIGHT;
 		bottom = viewSize_y * BOTTOM;
 
-		// 计算粗线宽度
 		thickLineWidth = viewSize_x * THICK_LINE_WIDTH;
 		thinLineWidth = viewSize_x * THIN_LINE_WIDTH;
 		
 		xDivisor = pointFs.size()+1;
 		yDivisor = 3;
 
-		// 计算纵轴数据最大值
 		maxY = 0;
 		for (int j = 0; j < pointFs.size(); j++) {
 			if (maxY < pointFs.get(j).getHighTemp()) {
 				maxY = pointFs.get(j).getHighTemp();
 			}
 		}
-		// 计算纵轴最近的能被count整除的值
 		int remainderY = ((int) maxY) % (yDivisor);
 		maxY = remainderY == 0 ? ((int) maxY) : yDivisor - remainderY + ((int) maxY);
 
-		// 生成纵轴刻度值
 		rulerY = new float[yDivisor+1];
 		for (int i = 0; i < rulerY.length; i++) {
 			rulerY[i] = maxY / (yDivisor) * i;
 		}
 
-		// 计算横纵坐标刻度间隔
 		spaceY = viewSize_y * (BOTTOM - TOP) / yDivisor;
 		spaceX = viewSize_x * (RIGHT - LEFT) / xDivisor;
 		
@@ -216,7 +191,7 @@ public class WeatherLineView extends View {
 			mTextPaint.setTextSize(textXRulerSize);
 			
 			mPath.reset();
-			pointPaint.setColor(Color.RED);
+			pointPaint.setColor(Color.WHITE);
 			for (int i = 0; i < pointFs.size(); i++) {
 				float x = mCanvas.getWidth() / xDivisor * i + left + spaceX;
 				float y = mCanvas.getHeight() / maxY * pointFs.get(i).getHighTemp();
@@ -227,11 +202,11 @@ public class WeatherLineView extends View {
 				
                 if(i == selectPosition){
                 	mTextPaint.setTextSize(textSignSzie/1.5F);
-                	//mTextPaint.setColor(Color.GREEN);
+                	mTextPaint.setColor(dateBgColor);
                 }
                 else{
                 	mTextPaint.setTextSize(textSignSzie/2F);
-                	//mTextPaint.setColor(Color.WHITE);
+                	mTextPaint.setColor(Color.WHITE);
                 }
             	canvas.drawCircle(x, y, thickLineWidth*5/4, pointPaint);
     			textWidth = mTextPaint.measureText(pointFs.get(i).getDate());
@@ -250,7 +225,7 @@ public class WeatherLineView extends View {
 			//linePaint.setPathEffect(new CornerPathEffect(0));
 
 			// 重置线条宽度
-			linePaint.setColor(Color.RED);
+			//linePaint.setColor(Color.RED);
 			linePaint.setStrokeWidth(thickLineWidth);
 	
 			// 将Path绘制到我们自定的Canvas上
@@ -261,7 +236,7 @@ public class WeatherLineView extends View {
 			
 			mPath.reset();
 			mAreaPath.reset();
-			pointPaint.setColor(Color.BLUE);
+			//pointPaint.setColor(Color.BLUE);
 			for (int i = 0; i < pointFs.size(); i++) {
 				float x = mCanvas.getWidth() / xDivisor * i + left + spaceX;
 				float y = mCanvas.getHeight() / maxY * pointFs.get(i).getLowTemp();
@@ -269,11 +244,11 @@ public class WeatherLineView extends View {
 
                 if(i == selectPosition){
                 	mTextPaint.setTextSize(textSignSzie/1.5F);
-                	//mTextPaint.setColor(Color.GREEN);
+                	mTextPaint.setColor(dateBgColor);
                 }
                 else{
                 	mTextPaint.setTextSize(textSignSzie/2F);
-                	//mTextPaint.setColor(Color.WHITE);
+                	mTextPaint.setColor(Color.WHITE);
                 }
 				canvas.drawCircle(x, y, thickLineWidth*5/4, pointPaint);
     			textWidth = mTextPaint.measureText(pointFs.get(i).getDate());
@@ -293,7 +268,7 @@ public class WeatherLineView extends View {
 			}
 			mAreaPath.close();	
 			// 重置线条宽度
-			linePaint.setColor(Color.BLUE);
+			//linePaint.setColor(Color.BLUE);
 			linePaint.setStrokeWidth(thickLineWidth);
 			//int sc = canvas.saveLayerAlpha(0, 0, canvas.getWidth(), canvas.getHeight(), 25, Canvas.ALL_SAVE_FLAG);
 			canvas.drawPath(mAreaPath, areaPaint);
@@ -336,7 +311,7 @@ public class WeatherLineView extends View {
 		// 还原画布
 		canvas.restoreToCount(sc);
 		
-		pointPaint.setColor(Color.GREEN);
+		pointPaint.setColor(dateBgColor);
 		canvas.drawCircle(selectCricle_x, bottom + textSignSzie, thickLineWidth*6, pointPaint);
 		
 		// 绘制横纵轴向刻度值

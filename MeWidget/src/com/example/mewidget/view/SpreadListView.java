@@ -156,7 +156,7 @@ public class SpreadListView extends AdapterView<CursorAdapter> {
 
 	@Override
 	public void setAdapter(CursorAdapter adapter) {
-		if(this.animationIsDoing) return;
+		if(animationIsDoing) return;
 		if(mAdapter != null) {
 			//mAdapter.unregisterDataSetObserver(mDataObserver);
 		}
@@ -594,10 +594,16 @@ public class SpreadListView extends AdapterView<CursorAdapter> {
             @Override  
             public void onAnimationEnd(Animator animation) {  
         		animationIsDoing = false;
+        		
             	if(!openViewExist){
             		//但整个页面没有打开的页面时，点击的页面打开后，使mMaxY没有增长originalHeight*2, 所以减小mNextY的值
+            		//when current screen has no open item, clicking to open the item, then decrease the nNext
             		mNextY += -originalHeight*2;
             		notMove = true;
+            	}
+            	if(openPosition < 0){
+            		//At first time click the item, increase the mMax 
+            		mMaxY += originalHeight*2;
             	}
             	openViewExist = false;
             	openView = view;
