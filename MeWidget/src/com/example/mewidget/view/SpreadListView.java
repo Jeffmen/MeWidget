@@ -587,14 +587,14 @@ public class SpreadListView extends AdapterView<CursorAdapter> {
             @Override  
             public void onAnimationEnd(Animator animation) {  
         		animationIsDoing = false;
-        		
-            	if(!openViewExist){
+
+            	if(position > openPosition && !openViewExist){
             		//但整个页面没有打开的页面时，点击的页面打开后，使mMaxY没有增长originalHeight*2, 所以减小mNextY的值
             		//when current screen has no open item, clicking to open the item, then decrease the nNext
             		mNextY += -originalHeight*2;
             		notMove = true;
             	}
-            	if(openPosition < 0){
+            	if(openPosition < 0 && mMaxY != Integer.MAX_VALUE){
             		//At first time click the item, increase the mMax 
             		mMaxY += originalHeight*2;
             	}
@@ -666,7 +666,9 @@ public class SpreadListView extends AdapterView<CursorAdapter> {
 					removeViewInLayout(touchView);
 					openPosition = -1;
             		//there is no open item, decrease the mMax 
-            		mMaxY -= originalHeight*2;
+	            	if(mMaxY != Integer.MAX_VALUE){
+	            		mMaxY -= originalHeight*2;
+	            	}
 //	            	openPosition = nextPosition > openPosition ? openPosition : nextPosition;
 		        }  
 		    });
