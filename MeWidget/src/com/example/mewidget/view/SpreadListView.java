@@ -588,7 +588,7 @@ public class SpreadListView extends AdapterView<CursorAdapter> {
             public void onAnimationEnd(Animator animation) {  
         		animationIsDoing = false;
 
-            	if(position > openPosition && !openViewExist){
+            	if(openPosition > 0 && position > openPosition && !openViewExist){
             		//但整个页面没有打开的页面时，点击的页面打开后，使mMaxY没有增长originalHeight*2, 所以减小mNextY的值
             		//when current screen has no open item, clicking to open the item, then decrease the nNext
             		mNextY += -originalHeight*2;
