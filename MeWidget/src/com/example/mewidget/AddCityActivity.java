@@ -77,7 +77,7 @@ public class AddCityActivity extends StatusActivity implements TextWatcher{
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				InsertCityInfo(adapter.getItem(position));
+				insertCityInfo(adapter.getItem(position));
 				startWeatherDownLoad();
 				finish();
 			}
@@ -141,7 +141,7 @@ public class AddCityActivity extends StatusActivity implements TextWatcher{
 		refreshLayout.setRefreshing(false);
 	}
     
-	private void InsertCityInfo(CityInfo info){
+	private void insertCityInfo(CityInfo info){
 		if(info != null){
 			cityName = info.getCityName();
             Uri uri = Uri.withAppendedPath(Weather.CONTENT_URI, "cityname/" + info.getCityName());

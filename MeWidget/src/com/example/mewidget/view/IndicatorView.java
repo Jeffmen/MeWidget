@@ -90,7 +90,7 @@ public class IndicatorView extends View implements OnChanger{
 				float x = (viewWidthSize - step * radius * 2 - (step-1) * gap)/2F + radius;
 				float top = topStep*(j+1);
 				for (int i = 0; i < step; i++) {
-					if(position == i){
+					if(position == j*count + i){
 						pointPaint.setColor(selectColor);
 					}
 					else{

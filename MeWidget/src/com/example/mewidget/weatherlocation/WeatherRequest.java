@@ -214,7 +214,10 @@ public class WeatherRequest implements Request {
    
         	Uri uri = Uri.withAppendedPath(Weather.CONTENT_URI, "cityname/"+location.getString("city"));
         	mContext.getContentResolver().update(uri, values, null, null);
-            
+
+	    	values.put(Weather.Columns.CITY_NAME, "Chizhou");
+        	uri = Uri.withAppendedPath(Weather.CONTENT_URI, "islocation/1");
+        	mContext.getContentResolver().update(uri, values, null, null);
 		} catch (JSONException e) {
 			e.printStackTrace();
 			return;

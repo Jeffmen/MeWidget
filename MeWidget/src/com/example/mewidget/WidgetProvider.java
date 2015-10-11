@@ -6,7 +6,6 @@ import java.util.GregorianCalendar;
 
 import com.example.mewidget.provider.Weather;
 
-import android.animation.AnimatorSet;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -19,16 +18,15 @@ import android.net.Uri;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
 public class WidgetProvider extends AppWidgetProvider{
 	private Context mContext;
+	AppWidgetManager appWidgetManager;
+	int[] appWidgetIds;
 	private RemoteViews remoteViews;    
 	private Calendar calendar;
 	private Date curDate;
-	private String ITEM_CLICK_ACTION = "com.example.zteweather.item_click";
     private String[] MouthString = {"January","February","March","April","May","June","July","August","September","October","November","December"};
     private String[] WeekString = {"Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"};
     private Uri uri = Uri.withAppendedPath(Weather.CONTENT_URI, "islocation/1");
@@ -36,21 +34,21 @@ public class WidgetProvider extends AppWidgetProvider{
 	private final ContentObserver mObserver = new ContentObserver(new Handler()) {
 	      @Override
 	    public void onChange(boolean selfChange) {
+	    	  Log.i("WidgetProvider", "WidgetProvider:updateWeather");
 	    	  updateWeather();
+	    	  appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);
 	    }
 	};
 	
 	@Override
 	public void onEnabled(Context context) {
-		  context.getContentResolver().
-          registerContentObserver(uri, false, mObserver);
+		context.getContentResolver().registerContentObserver(uri, false, mObserver);
 		super.onEnabled(context);
 	}
 	
 	@Override
 	public void onDeleted(Context context, int[] appWidgetIds) {
-		  context.getContentResolver().
-          registerContentObserver(uri, false, mObserver);
+		context.getContentResolver().unregisterContentObserver(mObserver);
 		super.onDeleted(context, appWidgetIds);
 	}
 	
@@ -59,6 +57,8 @@ public class WidgetProvider extends AppWidgetProvider{
 			int[] appWidgetIds) { 
 		Log.i("WidgetProvider", "onUpdate");
 		this.mContext = context;
+		this.appWidgetManager = appWidgetManager;
+		this.appWidgetIds = appWidgetIds;
 		this.calendar = new GregorianCalendar(); 
 		this.curDate = new Date(System.currentTimeMillis());
 		remoteViews=new RemoteViews(context.getPackageName(), R.layout.widget_layout);
@@ -111,7 +111,7 @@ public class WidgetProvider extends AppWidgetProvider{
 	}
 	
 	private void updateWeather(){
-		//Uri uri = Uri.withAppendedPath(Weather.CONTENT_URI, "islocation/1");
+		if(mContext==null) return;
 		Cursor c = this.mContext.getContentResolver().query(uri, Weather.PROJECTION_WEATHER_INFO, null, null, null);
 	
 	    if(c != null && c.getCount() > 0){
