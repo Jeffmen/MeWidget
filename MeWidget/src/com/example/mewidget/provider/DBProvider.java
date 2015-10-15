@@ -2,9 +2,12 @@ package com.example.mewidget.provider;
 
 import java.util.List;
 
+import com.example.mewidget.WidgetProvider;
+
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -143,7 +146,6 @@ public class DBProvider extends ContentProvider {
 	@Override
 	public int update(Uri uri, ContentValues values, String selection,
 			String[] selectionArgs) {
-		// TODO Auto-generated method stub
         int count = 0;
         List<String> pathSegments = uri.getPathSegments();
 		switch(uriMatcher.match(uri)){
@@ -165,6 +167,9 @@ public class DBProvider extends ContentProvider {
             throw new IllegalArgumentException("Unknown URI: " + uri);
 		}
         this.getContext().getContentResolver().notifyChange(Weather.CONTENT_URI, null);
+	  	Intent intent = new Intent();  
+	  	intent.setAction(WidgetProvider.UPDATE_ACTION);  
+	  	this.getContext().sendBroadcast(intent);
 		return count;
 	}
 

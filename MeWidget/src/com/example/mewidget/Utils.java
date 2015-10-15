@@ -3,6 +3,9 @@ package com.example.mewidget;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import com.example.mewidget.view.WeatherCardItem;
 import com.nineoldandroids.view.ViewHelper;
@@ -41,6 +44,7 @@ public class Utils {
 		R.drawable.drizzle2, 
 		R.drawable.moon, 
 		R.drawable.thunderstorms2};
+	public static Calendar calendar = new GregorianCalendar(); 
 	
 	public static int dpToPx(Context context,int dp) {
         return (int) (context.getResources().getDisplayMetrics().density * dp + 0.5f);
@@ -253,5 +257,12 @@ public class Utils {
         }
         final int color = Math.abs(identifier.hashCode()) % sColors.length();
         return sColors.getColor(color, sDefaultColor);
-    }
+    }	
+    
+    public static Calendar getCalendar(int position)
+	{	     
+    	calendar.setTime(new Date(System.currentTimeMillis())); 
+        calendar.add(Calendar.DATE, position);
+		return calendar;
+	}
 }

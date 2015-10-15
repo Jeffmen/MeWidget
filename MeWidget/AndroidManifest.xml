@@ -47,6 +47,7 @@
                 <action android:name="android.appwidget.action.APPWIDGET_DELETED" />
                 <action android:name="android.appwidget.action.APPWIDGET_DISABLED" />
                 <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
+                <action android:name="com.example.mewidget.update_weather_widget" />
             </intent-filter>
             <meta-data 
                 android:name="android.appwidget.provider" 
