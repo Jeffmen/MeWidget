@@ -102,7 +102,6 @@ public class WidgetProvider extends AppWidgetProvider{
     public  void updateWidget(Context context) {
         RemoteViews remoteViews = buildUpdate(context);
 		updateWeather(context, remoteViews);
-		Log.i("888","888888");
         AppWidgetManager.getInstance(context).updateAppWidget(new ComponentName(context, this.getClass()) , remoteViews);
     }
     

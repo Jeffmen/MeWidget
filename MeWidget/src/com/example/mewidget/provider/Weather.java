@@ -10,7 +10,8 @@ public class Weather {
     		Columns.CITY_NAME, 
     		Columns.CITY_ID,
     		Columns.LATITUDE,
-    		Columns.LONGITUDE 
+    		Columns.LONGITUDE,
+    		Columns.IS_LOCATION
     };
     public static String[] PROJECTION_WEATHER_INFO = new String[] { 
 		Columns._ID,

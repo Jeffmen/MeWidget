@@ -11,11 +11,14 @@ import org.json.JSONObject;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.mewidget.WidgetProvider;
 import com.example.mewidget.provider.Weather;
 import com.example.mewidget.weatherlocation.RequestManager.Request;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
 
@@ -211,13 +214,19 @@ public class WeatherRequest implements Request {
 	    	values.put(Weather.Columns.W_DATE5, forecast.getJSONObject(4).getString("day"));
 	    	values.put(Weather.Columns.WEATHER_TEXT5, forecast.getJSONObject(4).getString("text"));
 	        
-   
         	Uri uri = Uri.withAppendedPath(Weather.CONTENT_URI, "cityname/"+location.getString("city"));
         	mContext.getContentResolver().update(uri, values, null, null);
 
-	    	values.put(Weather.Columns.CITY_NAME, "Chizhou");
-        	uri = Uri.withAppendedPath(Weather.CONTENT_URI, "islocation/1");
-        	mContext.getContentResolver().update(uri, values, null, null);
+	        Cursor c = mContext.getContentResolver().query(uri, Weather.PROJECTION_CITY_INFO, null, null, null);
+            if(c != null && c.getCount() >= 0){
+            	c.moveToFirst();
+        		int isLocation = c.getInt(c.getColumnIndex(Weather.Columns.IS_LOCATION));
+        		if(isLocation == 1){
+        		  	Intent intent = new Intent();  
+        		  	intent.setAction(WidgetProvider.UPDATE_ACTION);  
+        		  	mContext.sendBroadcast(intent);
+        		}
+            }
 		} catch (JSONException e) {
 			e.printStackTrace();
 			return;

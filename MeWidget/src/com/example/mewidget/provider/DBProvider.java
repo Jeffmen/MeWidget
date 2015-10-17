@@ -2,12 +2,9 @@ package com.example.mewidget.provider;
 
 import java.util.List;
 
-import com.example.mewidget.WidgetProvider;
-
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
-import android.content.Intent;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -27,13 +24,12 @@ public class DBProvider extends ContentProvider {
 	private static final int WEATHER_CITY_NAME = 6;
 	private static final int WEATHER_IS_LOCATION = 7;
 	static {
-	    // ��û��ƥ��ɹ���ʱ������NO_MATCH��ֵ
 	    uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 		//content://com.example.mewidget.provider/city
 	    uriMatcher.addURI(AUTHORITY, City.TABLE_NAME, CITY);
 		//content://com.example.mewidget.provider/city/21
 	    uriMatcher.addURI(AUTHORITY, City.TABLE_NAME+"/#", CITY_ID);
-		//content://com.example.mewidget.provider/city/filter/�Ϻ�
+		//content://com.example.mewidget.provider/city/filter/cityname
 	    uriMatcher.addURI(AUTHORITY, City.TABLE_NAME+"/filter/*", CITY_NAME_FILTER);
 	    uriMatcher.addURI(AUTHORITY, Weather.TABLE_NAME, WEATHER);
 	    uriMatcher.addURI(AUTHORITY, Weather.TABLE_NAME+"/cityid/#", WEATHER_CITY_ID);
@@ -41,11 +37,8 @@ public class DBProvider extends ContentProvider {
 	    uriMatcher.addURI(AUTHORITY, Weather.TABLE_NAME+"/islocation/#", WEATHER_IS_LOCATION);
 	}
 
-    //private static final String INVALID_CITY = "";
-	
 	@Override
 	public boolean onCreate() {
-		// TODO Auto-generated method stub
 		dbHelper = new DBHelper(this.getContext());
 		return false;
 	}
@@ -100,13 +93,11 @@ public class DBProvider extends ContentProvider {
 
 	@Override
 	public String getType(Uri uri) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Uri insert(Uri uri, ContentValues values) {
-		// TODO Auto-generated method stub
 		switch(uriMatcher.match(uri)){
 	    case WEATHER:
 			SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -125,7 +116,6 @@ public class DBProvider extends ContentProvider {
 
 	@Override
 	public int delete(Uri uri, String selection, String[] selectionArgs) {
-		// TODO Auto-generated method stub
         int count = 0;
 		switch(uriMatcher.match(uri)){
 	    case WEATHER_CITY_NAME:
@@ -167,9 +157,6 @@ public class DBProvider extends ContentProvider {
             throw new IllegalArgumentException("Unknown URI: " + uri);
 		}
         this.getContext().getContentResolver().notifyChange(Weather.CONTENT_URI, null);
-	  	Intent intent = new Intent();  
-	  	intent.setAction(WidgetProvider.UPDATE_ACTION);  
-	  	this.getContext().sendBroadcast(intent);
 		return count;
 	}
 
