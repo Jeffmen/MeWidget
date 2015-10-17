@@ -594,9 +594,14 @@ public class SpreadListView extends AdapterView<CursorAdapter> {
             		mNextY += -originalHeight*2;
             		notMove = true;
             	}
-            	if(openPosition < 0 && mMaxY != Integer.MAX_VALUE){
-            		//At first time click the item, increase the mMax 
-            		mMaxY += originalHeight*2;
+            	if(openPosition < 0 && mMaxY != Integer.MAX_VALUE && mAdapter.getCount() > 3){
+            		if(mAdapter.getCount() == 4){ 
+                		mMaxY += originalHeight;
+            		}
+            		else{ 
+                		mMaxY += originalHeight*2;
+            		}
+            		//At first time click the item, increase the mMax
             	}
             	openViewExist = false;
             	openView = view;
@@ -628,15 +633,6 @@ public class SpreadListView extends AdapterView<CursorAdapter> {
     private void deleteItemView(){ 
     	if(touchView != null){
 	    	final int originalHeight = touchView.getHeight();
-	    	//final int nextPosition;
-//	    	if(touchPosition+1 == mAdapter.getCount()){
-//	    		nextPosition = touchPosition-1;
-//	    	}
-//	    	else{
-//	    		nextPosition = touchPosition+1;
-//	    	}
-	
-	    	//final View nextView = getChildAt(nextPosition - mTopViewIndex - 1);
 	    	ValueAnimator animator = ValueAnimator.ofInt(originalHeight, 0); 
 		    animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {  
 		        @Override  
@@ -645,19 +641,10 @@ public class SpreadListView extends AdapterView<CursorAdapter> {
 	                if(touchView != null)
 			            touchView.measure(MeasureSpec.makeMeasureSpec(getWidth(), MeasureSpec.EXACTLY),
 								          MeasureSpec.makeMeasureSpec(nowY, MeasureSpec.EXACTLY));
-//	                if(nextView != null)
-//			            nextView.measure(MeasureSpec.makeMeasureSpec(getWidth(), MeasureSpec.EXACTLY),
-//								          MeasureSpec.makeMeasureSpec(originalHeight/3 + (originalHeight-nowY)*2/3, MeasureSpec.EXACTLY));
 		        	requestLayout();
 		        }  
 		    });          
 		    animator.addListener(new AnimatorListenerAdapter() {        	
-//		    	@Override  
-//	            public void onAnimationStart(Animator animation) {  
-//	        		if(nextView instanceof OnDrager){
-//	        			((OnDrager)nextView).moveWeahterIconTo(0);
-//	        		}
-//	            } 
 		        @Override  
 		        public void onAnimationEnd(Animator animation) {
 					if(mOnItemDeleteListener != null){
@@ -669,7 +656,6 @@ public class SpreadListView extends AdapterView<CursorAdapter> {
 	            	if(mMaxY != Integer.MAX_VALUE){
 	            		mMaxY -= originalHeight*2;
 	            	}
-//	            	openPosition = nextPosition > openPosition ? openPosition : nextPosition;
 		        }  
 		    });
 		    animator.setDuration(ANIMATION_DURATION);
