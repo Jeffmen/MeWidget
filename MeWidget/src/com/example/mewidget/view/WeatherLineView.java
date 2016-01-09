@@ -51,7 +51,7 @@ public class WeatherLineView extends View {
 	private float thickLineWidth, thinLineWidth;// 粗线和细线宽度
 	private float left, top, right, bottom;// 网格区域左上右下两点坐标
 	private int viewSize_x, viewSize_y;// 控件尺寸
-	private float maxY;// 横纵轴向最大刻度
+	private float maxY, minY;// 横纵轴向最大刻度
 	private float spaceX, spaceY;// 刻度间隔
 	private int selectPosition;
     private float phase, selectCricle_x;
@@ -129,18 +129,26 @@ public class WeatherLineView extends View {
 		xDivisor = pointFs.size()+1;
 		yDivisor = 3;
 
-		maxY = 0;
+		maxY = -300;
+		minY = 300;
 		for (int j = 0; j < pointFs.size(); j++) {
 			if (maxY < pointFs.get(j).getHighTemp()) {
 				maxY = pointFs.get(j).getHighTemp();
 			}
+			if (minY > pointFs.get(j).getLowTemp()) {
+				minY = pointFs.get(j).getLowTemp();
+			}
 		}
-		int remainderY = ((int) maxY) % (yDivisor);
-		maxY = remainderY == 0 ? ((int) maxY) : yDivisor - remainderY + ((int) maxY);
+		
+		//int remainderY = ((int) maxY) % (yDivisor);
+		//maxY = remainderY == 0 ? ((int) maxY) : yDivisor - remainderY + ((int) maxY);
+		float step = (int) Math.ceil((maxY - minY)/(yDivisor-1));
+		minY = maxY - step*yDivisor;
 
 		rulerY = new float[yDivisor+1];
 		for (int i = 0; i < rulerY.length; i++) {
-			rulerY[i] = maxY / (yDivisor) * i;
+			//rulerY[i] = maxY / (yDivisor) * i;
+			rulerY[i] = minY + step * i;
 		}
 
 		spaceY = viewSize_y * (BOTTOM - TOP) / yDivisor;
@@ -194,7 +202,7 @@ public class WeatherLineView extends View {
 			pointPaint.setColor(Color.WHITE);
 			for (int i = 0; i < pointFs.size(); i++) {
 				float x = mCanvas.getWidth() / xDivisor * i + left + spaceX;
-				float y = mCanvas.getHeight() / maxY * pointFs.get(i).getHighTemp();
+				float y = mCanvas.getHeight() / (maxY - minY) * (pointFs.get(i).getHighTemp()-minY);
 				y = mCanvas.getHeight() - y + top;
 				
 				Bitmap bitmap = getBitmapById(pointFs.get(i).getWeatherIcon(), (int)spaceX, (int)spaceX);
@@ -239,7 +247,7 @@ public class WeatherLineView extends View {
 			//pointPaint.setColor(Color.BLUE);
 			for (int i = 0; i < pointFs.size(); i++) {
 				float x = mCanvas.getWidth() / xDivisor * i + left + spaceX;
-				float y = mCanvas.getHeight() / maxY * pointFs.get(i).getLowTemp();
+				float y = mCanvas.getHeight() / (maxY - minY) * (pointFs.get(i).getLowTemp()-minY);
 				y = mCanvas.getHeight() - y + top;
 
                 if(i == selectPosition){

@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,7 +25,7 @@ import com.example.mewidget.view.WeatherCardLoader;
 import com.example.mewidget.weatherlocation.CityLocationManager;
 import com.example.mewidget.weatherlocation.WeatherService;
 
-public class CityMainActivity extends StatusActivity {
+public class CityMainActivity extends AppCompatActivity {
 
     private static final int LOADER_ID = 1;
     public static final String CITY_POSITION = "city_position";

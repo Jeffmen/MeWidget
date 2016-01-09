@@ -33,4 +33,6 @@
     <color name="area_start_color">#3f758a99</color>
     <color name="area_end_color">#00ffffff</color>
     <color name="date_bg_color">#FFCC01</color>
+    <color name="transparent_gray">#48323232</color>
+    <color name="transparent_dark_gray">#68323232</color>
 </resources>
